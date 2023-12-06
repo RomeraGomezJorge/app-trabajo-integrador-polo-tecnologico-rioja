@@ -42,7 +42,7 @@ export const LocationListFilter = ({ filter, setFilter }: Props) => {
               <Grid item xs={12} sm={8}>
                 <Button
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   disabled={!dirty || !isValid}
                   sx={{ p: 1, mr: 2 }}
                 >
@@ -54,7 +54,6 @@ export const LocationListFilter = ({ filter, setFilter }: Props) => {
                   <Button
                     startIcon={<CancelIcon />}
                     variant="text"
-                    sx={{ textTransform: "none" }}
                     onClick={() => setFilter({ name: "" })}
                   >
                     Clean filters

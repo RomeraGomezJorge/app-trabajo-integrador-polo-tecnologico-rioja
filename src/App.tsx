@@ -2,15 +2,15 @@ import "./App.css";
 
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 import { AppRouter } from "./routes/AppRouter";
+import { theme } from "./theme";
 
-const defaultTheme = createTheme();
+
 
 export function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <SnackbarProvider
         maxSnack={3}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
