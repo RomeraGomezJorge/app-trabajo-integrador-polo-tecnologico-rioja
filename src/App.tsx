@@ -1,20 +1,24 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
 
-import {createTheme} from "@mui/material/styles";
-import {ThemeProvider} from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import {AppRouter} from "./routes/AppRouter";
+import { createTheme } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
+import { AppRouter } from "./routes/AppRouter";
 
 const defaultTheme = createTheme();
 
-
 export function App() {
-
-    return (
-        <ThemeProvider theme={defaultTheme}>
-            <CssBaseline/>
-            <AppRouter/>
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={2000}
+      >
+        <CssBaseline />
+        <AppRouter />
+      </SnackbarProvider>
+    </ThemeProvider>
+  );
 }

@@ -1,24 +1,33 @@
-import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material";
-import * as yup from "yup";
+import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Form, Formik } from "formik";
+import { useMemo, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
-import { useState } from "react";
-import { FormikTextField } from "../../../shared/components/formikTextField";
-
-const validationSchema = yup.object().shape({
-  filter: yup.string().nullable(),
-});
+import { LocationListFilter } from "./LocationListFilters";
+import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
+import { useSnackbar } from "notistack";
 
 export const LocationList = () => {
+  const { enqueueSnackbar } = useSnackbar()
+  const [filter, setFilter] = useState<UseLocationsQuery>({ name: "" });
+  const { data: locations, isLoading, error } = useLocations();
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 15,
   });
-  const [filterLocations, setFilterLocations] = useState({ filter: null });
   const columns: GridColDef<Location>[] = [
     { field: "name", headerName: "Name", flex: 4 },
   ];
+
+
+  if(error){
+    enqueueSnackbar(error.message, { variant: 'error' })
+  }
+
+  const filteredLocations = useMemo(() => {
+    return locations.filter((location) =>
+      location.name.toLowerCase().includes(filter.name?.toLowerCase())
+    );
+  }, [locations, filter]);
 
   return (
     <BackofficeLayout menuTitleSelected="List location">
@@ -27,39 +36,10 @@ export const LocationList = () => {
         <CardContent sx={{ paddingTop: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
-              <Formik
-                initialValues={{
-                  filter: filterLocations.filter,
-                }}
-                validationSchema={validationSchema}
-                enableReinitialize
-                onSubmit={(values, formikHelpers) => {
-                  setFilterLocations({
-                    filter: values.filter,
-                  });
-                  formikHelpers.setSubmitting(false);
-                }}
-              >
-                {({ dirty, isValid }) => (
-                  <Form>
-                    <Grid container spacing={1} alignItems="center">
-                      <Grid item xs={12} sm={10}>
-                        <FormikTextField label="Filter" field="filer" />
-                      </Grid>
-                      <Grid item xs={12} sm={2}>
-                        <Button
-                          fullWidth
-                          type="submit"
-                          variant="contained"
-                          disabled={!dirty || !isValid}
-                        >
-                          Filter
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Form>
-                )}
-              </Formik>
+              <LocationListFilter 
+                filter={filter} 
+                setFilter={(filter) => setFilter(filter)}
+              />
             </Grid>
             <Grid item xs={12}>
               <DataGrid
@@ -68,9 +48,10 @@ export const LocationList = () => {
                 onPaginationModelChange={setPaginationModel}
                 pageSizeOptions={[5, 15, 25, 50]}
                 density="compact"
-                rows={[]}
+                rows={filteredLocations as unknown as Location[]}
+                getRowId={(row: Location) => row._id}
                 columns={columns}
-                loading={false}
+                loading={isLoading}
               />
             </Grid>
           </Grid>
