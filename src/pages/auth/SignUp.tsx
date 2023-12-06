@@ -1,17 +1,17 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
     Avatar,
     Box,
     Button,
-    Container, FormControl,
+    Container,
     Grid,
     IconButton,
-    InputAdornment, InputLabel,
-    Link, OutlinedInput,
+    InputAdornment,
+    Link,
     TextField,
     Typography
 } from "@mui/material";
-import {useState} from "react";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import { useState } from "react";
 
 export const SignUp = () => {
 

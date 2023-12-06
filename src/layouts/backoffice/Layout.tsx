@@ -1,9 +1,8 @@
-import {DrawerHeader, SideBar} from "./SideBar";
-import {TopBar} from "./TopBar";
-import {Box} from "@mui/material";
-import * as React from "react";
-import {ReactNode, useState} from "react";
-import {styled} from "@mui/material/styles";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { ReactNode, useState } from "react";
+import { SideBar } from "./SideBar";
+import { TopBar } from "./TopBar";
 
 interface Props {
     children: ReactNode

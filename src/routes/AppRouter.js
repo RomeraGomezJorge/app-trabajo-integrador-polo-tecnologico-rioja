@@ -1,10 +1,9 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {SignUp} from "../pages/auth/SignUp";
-import {SignIn} from "../pages/auth/SignIn";
-import {ForgotPassword} from "../pages/auth/ForgotPassword";
-import {SideBar} from "../layouts/backoffice/SideBar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "../layouts/backoffice/Layout";
-import {LocationList} from "../pages/backoffice/location/LocationList";
+import { ForgotPassword } from "../pages/auth/ForgotPassword";
+import { SignIn } from "../pages/auth/SignIn";
+import { SignUp } from "../pages/auth/SignUp";
+import { LocationList } from "../pages/backoffice/location/LocationList";
 
 export const AppRouter = () => {
     return (
