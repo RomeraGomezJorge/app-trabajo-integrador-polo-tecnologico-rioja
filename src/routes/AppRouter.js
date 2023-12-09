@@ -4,6 +4,7 @@ import { ForgotPassword } from "../pages/auth/ForgotPassword";
 import { SignIn } from "../pages/auth/SignIn";
 import { SignUp } from "../pages/auth/SignUp";
 import { LocationList } from "../pages/backoffice/location/LocationList";
+import { LocationCreateButton } from "../pages/backoffice/location/LocationCreateButton";
 
 export const AppRouter = () => {
     return (
@@ -15,6 +16,7 @@ export const AppRouter = () => {
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/backoffice/home" element={<Layout/>} />
                 <Route path="/backoffice/location" element={<LocationList/>} />
+                <Route path="/backoffice/location/create" element={<LocationCreateButton/>} />
             </Routes>
         </BrowserRouter>
     );

@@ -12,7 +12,6 @@ interface FormikTextFieldProps<T> {
   rows?: number
   autoFocus?: boolean
   required?: boolean
-  size?: 'medium' | 'small' | undefined
 }
 
 export const FormikTextField = <T,>({
@@ -24,8 +23,7 @@ export const FormikTextField = <T,>({
   rows = 5,
   autoFocus = false,
   required = false,
-  size = 'medium',
-}: PropsWithChildren<FormikTextFieldProps<T>>) => {
+  }: PropsWithChildren<FormikTextFieldProps<T>>) => {
   const { values, touched, errors, handleChange, handleBlur } = useFormikContext<T>()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -39,7 +37,6 @@ export const FormikTextField = <T,>({
 
   return (
     <TextField
-      size={size}
       fullWidth
       id={field as string}
       name={field as string}

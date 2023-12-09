@@ -36,7 +36,6 @@ export const LocationListFilter = ({ filter, setFilter }: Props) => {
                 <FormikTextField
                   label="Search by name"
                   field="name"
-                  size="small"
                 />
               </Grid>
               <Grid item xs={12} sm={8}>

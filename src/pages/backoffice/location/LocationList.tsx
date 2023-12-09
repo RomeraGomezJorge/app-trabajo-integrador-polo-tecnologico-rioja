@@ -1,10 +1,13 @@
-import { Card, CardContent, CardHeader, Grid } from "@mui/material";
+import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useMemo, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
 import { useSnackbar } from "notistack";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { LocationCreateButton } from "./LocationCreateButton";
+
 
 export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar()
@@ -32,7 +35,8 @@ export const LocationList = () => {
   return (
     <BackofficeLayout menuTitleSelected="List location">
       <Card>
-        <CardHeader title="Locations" />
+        <CardHeader title="Locations" action={<LocationCreateButton/>}
+      />
         <CardContent sx={{ paddingTop: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
