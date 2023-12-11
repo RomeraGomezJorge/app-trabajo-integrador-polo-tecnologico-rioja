@@ -7,6 +7,15 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiTab:{
+      styleOverrides:{
+        root:{
+          textTransform: "none",
+          fontWeight: "bold"
+        }
+      }
+
+    },
     MuiButton: {
       styleOverrides: {
         root: {

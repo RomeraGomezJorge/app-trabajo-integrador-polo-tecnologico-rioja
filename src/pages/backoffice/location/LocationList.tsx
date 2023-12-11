@@ -1,12 +1,11 @@
-import { Button, Card, CardContent, CardHeader, Grid } from "@mui/material";
+import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useSnackbar } from "notistack";
 import { useMemo, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
+import { LocationCreateButton } from "./LocationCreateButton";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
-import { useSnackbar } from "notistack";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { LocationCreateButton } from "./LocationCreateButton";
 
 
 export const LocationList = () => {
