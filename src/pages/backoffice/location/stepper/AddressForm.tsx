@@ -9,7 +9,7 @@ export default function AddressForm() {
       <Typography variant="h6" gutterBottom>
         Address
       </Typography>
-      <Typography component="p" sx={{ pt: 0, pb: 2, color: "grey" }}>
+      <Typography sx={{ pt: 0, pb: 2, color: "grey" }}>
         Specifics about the physical location
       </Typography>
       <Grid container spacing={3}>

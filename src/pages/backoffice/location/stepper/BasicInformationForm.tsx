@@ -9,7 +9,7 @@ export default function BasicInformationForm() {
     <>
       <Typography variant="h6">Basic Information</Typography>
 
-      <Typography component="p" sx={{ pt: 0, pb: 2, color: "grey" }}>
+      <Typography  sx={{ pt: 0, pb: 2, color: "grey" }}>
         Overview and visual representation
       </Typography>
 

@@ -17,7 +17,7 @@ export const ForgotPassword = () => {
                     Forgot password
                 </Typography>
 
-                <Typography sx={{marginTop:3}} component="p" variant="body1">
+                <Typography sx={{marginTop:3}}  variant="body1">
                 Lost your password? Please enter your username or email address. You will receive a link to create a new password via email.
                 </Typography>
                 <Box>

@@ -24,7 +24,7 @@ export default function AdditionalInformationForm() {
       <Typography variant="h6" gutterBottom>
         Additional Information
       </Typography>
-      <Typography component="p" sx={{ pt: 0, pb: 2, color: "grey" }}>
+      <Typography  sx={{ pt: 0, pb: 2, color: "grey" }}>
         Contextual details to enriching the user expeirence
       </Typography>
       <Grid container spacing={3}>

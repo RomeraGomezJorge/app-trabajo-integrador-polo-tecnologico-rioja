@@ -49,7 +49,7 @@ export const ContactUsCard = ({ title, icon, children }: Props) => {
           >
             {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography>
             {children}
           </Typography>
         </CardContent>

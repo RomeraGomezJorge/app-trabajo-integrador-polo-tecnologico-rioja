@@ -6,8 +6,6 @@ import { SnackbarProvider } from "notistack";
 import { AppRouter } from "./routes/AppRouter";
 import { theme } from "./theme";
 
-
-
 export function App() {
   return (
     <ThemeProvider theme={theme}>
