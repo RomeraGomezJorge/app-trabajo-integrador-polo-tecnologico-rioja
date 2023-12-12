@@ -1,17 +1,14 @@
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import { FormikTextField } from "../../../../shared/components/formikTextField";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Divider, Stack } from "@mui/material";
+import { TitleGroupField } from "../../../../shared/components/TitleGroupField";
 
 export default function BasicInformationForm() {
   return (
     <>
-      <Typography variant="h6">Basic Information</Typography>
-
-      <Typography  sx={{ pt: 0, pb: 2, color: "grey" }}>
-        Overview and visual representation
-      </Typography>
+      <TitleGroupField
+        primary="Basic Information"
+        secondary="Overview and visual representation"
+      />
 
       <Grid container spacing={3}>
         <Grid item xs={12}>

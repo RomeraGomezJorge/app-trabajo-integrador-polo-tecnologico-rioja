@@ -7,6 +7,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { Box } from "@mui/material";
 import { FormikTextField } from "../../../../shared/components/formikTextField";
 import { FormikCheckBoxField } from "../../../../shared/components/FormikCheckBoxField";
+import { TitleGroupField } from "../../../../shared/components/TitleGroupField";
 
 export default function AdditionalInformationForm() {
   const daysOptions = [
@@ -20,13 +21,12 @@ export default function AdditionalInformationForm() {
   ];
 
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Additional Information
-      </Typography>
-      <Typography  sx={{ pt: 0, pb: 2, color: "grey" }}>
-        Contextual details to enriching the user expeirence
-      </Typography>
+    <>
+      <TitleGroupField
+        primary="Additional Information"
+        secondary="Contextual details to enriching the user expeirence"
+      />
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <FormikTextField label="Website" field="website" type="url" />
@@ -40,7 +40,7 @@ export default function AdditionalInformationForm() {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box component="fieldset" sx={{ mb: 2, borderColor:'lightgray'}}>
+          <Box component="fieldset" sx={{ mb: 2, borderColor: "lightgray" }}>
             <legend>Business hours</legend>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -61,7 +61,7 @@ export default function AdditionalInformationForm() {
               </Grid>
             </Grid>
           </Box>
-          <Box component="fieldset" sx={{ mb: 2, borderColor:'lightgray'}}>
+          <Box component="fieldset" sx={{ mb: 2, borderColor: "lightgray" }}>
             <legend>Coordinates</legend>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -82,7 +82,7 @@ export default function AdditionalInformationForm() {
               </Grid>
             </Grid>
           </Box>
-          <Box component="fieldset" sx={{ mb: 2, borderColor:'lightgray'}}>
+          <Box component="fieldset" sx={{ mb: 2, borderColor: "lightgray" }}>
             <legend>Social media</legend>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -98,6 +98,6 @@ export default function AdditionalInformationForm() {
           </Box>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 }

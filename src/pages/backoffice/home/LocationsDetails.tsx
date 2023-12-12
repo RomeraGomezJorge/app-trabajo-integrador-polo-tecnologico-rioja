@@ -43,11 +43,11 @@ export const LocationsDetails = () => {
                   <Divider textAlign="center" sx={{mb:3}}>
                     <Typography component="h2" fontSize={25} fontWeight="bold">
                       {" "}
-                      <span style={{ fontSize: 30, color: "#0543dc" }}>
+                      <span style={{ fontSize: 30, color: "#0543dc", fontWeight:"normal" }}>
                         [
                       </span>{" "}
                       {location.name}{" "}
-                      <span style={{ fontSize: 30, color: "blue" }}>]</span>{" "}
+                      <span style={{ fontSize: 30, color: "#0543dc",fontWeight:"normal" }}>]</span>{" "}
                     </Typography>
                   </Divider>
                   <LocationTabContext location={location} />

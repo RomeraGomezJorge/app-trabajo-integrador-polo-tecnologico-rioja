@@ -5,16 +5,18 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Grid,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import * as React from "react";
 import { useState } from "react";
 import * as yup from "yup";
 import AdditionalInformationForm from "./stepper/AdditionalInformationForm";
 import AddressForm from "./stepper/AddressForm";
 import BasicInformationForm from "./stepper/BasicInformationForm";
 import ContactForm from "./stepper/ContactForm";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 interface ComponenteProps {
   open: boolean;
@@ -91,7 +93,9 @@ export const LocationCreateButton = () => {
 const ModalCreate = ({ open, onClose }: ComponenteProps) => {
   return (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
-      <DialogTitle variant="h5">Create location</DialogTitle>
+      <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
+        <Divider textAlign="center">Create Location</Divider>
+      </DialogTitle>
       <Formik
         initialValues={{}}
         validationSchema={validationSchema}
@@ -101,8 +105,8 @@ const ModalCreate = ({ open, onClose }: ComponenteProps) => {
         }}
       >
         {({ dirty, isValid }) => (
-          <Form noValidate >
-            <DialogContent sx={{ paddingTop: 0 }}>
+          <Form noValidate>
+            <DialogContent sx={{ paddingTop: 2 }}>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                   <BasicInformationForm />
@@ -119,9 +123,16 @@ const ModalCreate = ({ open, onClose }: ComponenteProps) => {
               </Grid>
             </DialogContent>
             <DialogActions>
-              <Button variant="outlined">Cancel</Button>
+              <Button 
+              variant="outlined"
+              startIcon={<CancelIcon/>}
+              onClick={()=> onClose()}
+              >
+                Cancel
+                </Button>
               <Button
                 type="submit"
+                startIcon={<CheckCircleIcon/>}
                 variant="contained"
                 disabled={!dirty || !isValid}
               >

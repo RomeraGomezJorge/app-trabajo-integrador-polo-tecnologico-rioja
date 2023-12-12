@@ -2,16 +2,16 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { FormikTextField } from "../../../../shared/components/formikTextField";
+import { TitleGroupField } from "../../../../shared/components/TitleGroupField";
 
 export default function AddressForm() {
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Address
-      </Typography>
-      <Typography sx={{ pt: 0, pb: 2, color: "grey" }}>
-        Specifics about the physical location
-      </Typography>
+    <>
+      <TitleGroupField
+        primary="Address"
+        secondary="Specifics about the physical location"
+      />
+
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <FormikTextField label="Country" field="country" required />
@@ -34,6 +34,6 @@ export default function AddressForm() {
           <FormikTextField label="Street" field="street" required />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 }
