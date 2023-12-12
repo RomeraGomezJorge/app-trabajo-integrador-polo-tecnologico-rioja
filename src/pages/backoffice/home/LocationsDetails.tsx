@@ -1,19 +1,16 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Box,
   Card,
   CardContent,
   CardHeader,
   CircularProgress,
-  Tab,
+  Divider,
+  Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { useLocations } from "../location/locations.hooks";
-import { ContactUsTab } from "./Tab/ContactUsTab";
-import { BasicInforamtionTab } from "./Tab/BasicInforamtionTab";
-import { AddressTab } from "./Tab/AddressTab";
+import { LocationTabContext } from "./Tab/LocationTabContext";
 
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,43 +20,40 @@ export const LocationsDetails = () => {
     enqueueSnackbar(error.message, { variant: "error" });
   }
 
-  const [value, setValue] = useState("1");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
   return (
     <BackofficeLayout menuTitleSelected="Dashboard">
       {isLoading ? (
-        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center",height:'100vh'}}>
-        <CircularProgress size={50} />
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress size={50} />
+        </Box>
       ) : (
-        
         <Card>
           <CardHeader title="Locations" />
           <CardContent>
-            <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="Basic Information" value="1" />
-                  <Tab label="Address" value="2" />
-                  <Tab label="Contact Us" value="3" />
-                </TabList>
-              </Box>
-              <TabPanel value="1">
-                <BasicInforamtionTab />
-              </TabPanel>
-              <TabPanel value="2">
-                <AddressTab />
-              </TabPanel>
-              <TabPanel value="3" sx={{ display: "flex", gap: 5 }}>
-                <ContactUsTab />
-              </TabPanel>
-            </TabContext>
+            {locations.map((location) => {
+              return (
+                <Box sx={{ mb: 5 }}>
+                  <Divider textAlign="center" sx={{mb:3}}>
+                    <Typography component="h2" fontSize={25} fontWeight="bold">
+                      {" "}
+                      <span style={{ fontSize: 30, color: "#0543dc" }}>
+                        [
+                      </span>{" "}
+                      {location.name}{" "}
+                      <span style={{ fontSize: 30, color: "blue" }}>]</span>{" "}
+                    </Typography>
+                  </Divider>
+                  <LocationTabContext location={location} />
+                </Box>
+              );
+            })}
           </CardContent>
         </Card>
       )}

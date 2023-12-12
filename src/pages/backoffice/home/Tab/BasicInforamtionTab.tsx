@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-export const BasicInforamtionTab = () => {
+interface Props {
+  description?: string;
+  image: string;
+}
+
+export const BasicInforamtionTab = ({ description, image }: Props) => {
   return (
     <Box sx={{ p: 3, display: "flex", alignItems: "center" }}>
       <img
@@ -11,16 +16,7 @@ export const BasicInforamtionTab = () => {
       />
 
       <div>
-        <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: 22 }}>
-          Tab 1 Content
-        </Typography>
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-          finibus odio eget orci bibendum, ac hendrerit mi porta. Nullam
-          volutpat libero tempus leo lacinia ornare. In hac habitasse platea
-          dictumst. Pellentesque facilisis ex eget vulputate tincidunt.
-          Curabitur fringilla ultrices commodo.
-          </Typography>
+        <Typography>{description}</Typography>
       </div>
     </Box>
   );

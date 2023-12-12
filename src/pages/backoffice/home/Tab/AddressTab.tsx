@@ -1,43 +1,52 @@
-import PlaceIcon from '@mui/icons-material/Place';
+import PlaceIcon from "@mui/icons-material/Place";
 import { Grid, ListItem, ListItemText, Typography } from "@mui/material";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { ContactUsCard } from "../ContacUsCard";
-import { Icon } from 'leaflet';
+import { Icon } from "leaflet";
+import { Address, Coordinates } from "../../location/locations.hooks";
 
-export const AddressTab = () => {
+interface Props {
+  name: string;
+  address: Address;
+  coordinates: Coordinates;
+}
 
+export const AddressTab = ({ address, coordinates, name }: Props) => {
   const customIcon = new Icon({
-    iconSize: [30,30],
+    iconSize: [30, 30],
     iconUrl: require("../../../../assets/img/marker-icon.png"),
-  })
+  });
 
   return (
-    <Grid container spacing={2} alignItems="center"    >
-      <Grid item xs={2}>
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs={3}>
         <ContactUsCard
           title="Local Office Address"
           icon={<PlaceIcon fontSize="small" />}
         >
           <Typography sx={{ color: "dark" }}>
             <ListItem>
-              <ListItemText primary="Country" secondary="Argentina" />
+              <ListItemText primary="Country" secondary={address.country} />
             </ListItem>
             <ListItem>
-              <ListItemText primary="State" secondary="La Rioja" />
+              <ListItemText primary="City" secondary={address.city} />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Street" secondary="Peron 1001" />
+              <ListItemText primary="State" secondary={address.state} />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Postal code" secondary="5300" />
+              <ListItemText primary="Street" secondary={address.street} />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Postal code" secondary={address.postal_code} />
             </ListItem>
           </Typography>
         </ContactUsCard>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={9}>
         <MapContainer
-          center={[51.505, -0.09]}
+          center={[coordinates.latitude, coordinates.longitude]}
           zoom={13}
           scrollWheelZoom={false}
         >
@@ -45,10 +54,11 @@ export const AddressTab = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[51.505, -0.09]} icon={customIcon}>
-            <Popup>
-              Location name
-            </Popup>
+          <Marker
+            position={[coordinates.latitude, coordinates.longitude]}
+            icon={customIcon}
+          >
+            <Popup>{name}</Popup>
           </Marker>
         </MapContainer>
       </Grid>
