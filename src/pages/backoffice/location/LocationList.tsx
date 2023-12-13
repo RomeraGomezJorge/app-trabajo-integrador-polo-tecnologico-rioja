@@ -1,15 +1,21 @@
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColDef,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useMemo, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { LocationCreateButton } from "./LocationCreateButton";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 export const LocationList = () => {
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState<UseLocationsQuery>({ name: "" });
   const { data: locations, isLoading, error } = useLocations();
   const [paginationModel, setPaginationModel] = useState({
@@ -18,11 +24,44 @@ export const LocationList = () => {
   });
   const columns: GridColDef<Location>[] = [
     { field: "name", headerName: "Name", flex: 4 },
+    {
+      field: "actions",
+      type: "actions",
+      getActions: (params: GridRowParams) => [
+        <GridActionsCellItem
+          icon={
+            <ModeEditIcon
+              sx={{
+                borderRadius: 8,
+                backgroundColor: "blue",
+                color: "white",
+                fontSize:"1.5rem",
+                p: 0.5,
+              }}
+            />
+          }
+          label="Edit"
+        />,
+        <GridActionsCellItem
+          icon={
+            <DeleteIcon
+              sx={{
+                borderRadius: 8,
+                backgroundColor: "red",
+                color: "white",
+                fontSize:"1.5rem",
+                p: 0.5,
+              }}
+            />
+          }
+          label="Delete"
+        />,
+      ],
+    },
   ];
 
-
-  if(error){
-    enqueueSnackbar(error.message, { variant: 'error' })
+  if (error) {
+    enqueueSnackbar(error.message, { variant: "error" });
   }
 
   const filteredLocations = useMemo(() => {
@@ -34,13 +73,12 @@ export const LocationList = () => {
   return (
     <BackofficeLayout menuTitleSelected="List location">
       <Card>
-        <CardHeader title="Locations" action={<LocationCreateButton/>}
-      />
+        <CardHeader title="Locations" action={<LocationCreateButton />} />
         <CardContent sx={{ paddingTop: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
-              <LocationListFilter 
-                filter={filter} 
+              <LocationListFilter
+                filter={filter}
                 setFilter={(filter) => setFilter(filter)}
               />
             </Grid>

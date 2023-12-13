@@ -23,7 +23,7 @@ export const theme = createTheme({
         },
       },
       defaultProps: {
-        size: "small",
+        size: "large",
       },
     },
     MuiTextField: {

@@ -40,14 +40,19 @@ export const LocationsDetails = () => {
             {locations.map((location) => {
               return (
                 <Box sx={{ mb: 5 }}>
-                  <Divider textAlign="center" sx={{mb:3}}>
+                  <Divider textAlign="center"
+                           sx={{
+                             mb:3,
+                           "&::before, &::after": {
+                               borderColor: "blue",
+                             },
+                           }}
+                  >
                     <Typography component="h2" fontSize={25} fontWeight="bold">
-                      {" "}
-                      <span style={{ fontSize: 30, color: "#0543dc", fontWeight:"normal" }}>
-                        [
-                      </span>{" "}
-                      {location.name}{" "}
-                      <span style={{ fontSize: 30, color: "#0543dc",fontWeight:"normal" }}>]</span>{" "}
+
+                      <span style={{ fontSize: 30, color: "blue", fontWeight:"normal", marginRight:10 }}>[</span>
+                      {location.name}
+                      <span style={{ fontSize: 30, color: "blue",fontWeight:"normal",marginLeft:10 }}>]</span>
                     </Typography>
                   </Divider>
                   <LocationTabContext location={location} />
