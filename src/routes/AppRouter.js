@@ -1,15 +1,13 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {ForgotPassword} from "../pages/auth/ForgotPassword";
-import {SignIn} from "../pages/auth/SignIn";
-import {SignUp} from "../pages/auth/SignUp";
-import {LocationList} from "../pages/backoffice/location/LocationList";
-import {LocationCreateButton} from "../pages/backoffice/location/LocationCreateButton";
-import {LocationsDetails} from "../pages/backoffice/home/LocationsDetails";
-import {useSelector} from "react-redux"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ForgotPassword } from "../pages/auth/ForgotPassword";
+import { SignIn } from "../pages/auth/SignIn";
+import { SignUp } from "../pages/auth/SignUp";
+import { LocationsDetails } from "../pages/backoffice/home/LocationsDetails";
+import { LocationCreateButton } from "../pages/backoffice/location/LocationCreateButton";
+import { LocationList } from "../pages/backoffice/location/LocationList";
 
 export const AppRouter = () => {
-    const location = useSelector( state => state.locations)
-    console.log({location})
+    
     return (
 
         <BrowserRouter>

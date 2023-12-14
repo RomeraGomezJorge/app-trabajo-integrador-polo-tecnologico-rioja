@@ -13,6 +13,7 @@ import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { LocationEditButton } from "./LocationEditButton";
 
 export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -28,20 +29,7 @@ export const LocationList = () => {
       field: "actions",
       type: "actions",
       getActions: (params: GridRowParams) => [
-        <GridActionsCellItem
-          icon={
-            <ModeEditIcon
-              sx={{
-                borderRadius: 8,
-                backgroundColor: "blue",
-                color: "white",
-                fontSize:"1.5rem",
-                p: 0.5,
-              }}
-            />
-          }
-          label="Edit"
-        />,
+        <LocationEditButton />,
         <GridActionsCellItem
           icon={
             <DeleteIcon
