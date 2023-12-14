@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { ApiError,ApiResponse, apiGet } from '../../../services/apiService';
+import { ApiError,ApiResponse, apiGet, apiPost } from '../../../services/apiService';
 
 
 enum DaysOfOperation {
@@ -62,41 +62,3 @@ export interface Location {
 export interface UseLocationsQuery {
   name: string ;
 }
-
-export const useLocations = (query?: UseLocationsQuery) => {
-  const [data, setData] = useState<Location[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<ApiError>();
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await apiGet<ApiResponse>('/location', { params: query });
-        
-        if(response?.status === 'fail' && response?.message){
-          setError({
-            code: 500,
-            message: response?.message,
-            error: response?.message,
-          });
-        }else if(response?.data){
-          setData(response.data)  
-        }
-        
-      } catch (error: any) {
-        setError({
-          code: error.code,
-          message: error.message,
-          error: error.name,
-        });
-        
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [query]);
-
-  return { data, isLoading, error };
-};

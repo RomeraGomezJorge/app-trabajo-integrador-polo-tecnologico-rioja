@@ -74,7 +74,7 @@ const validationSchema = yup.object().shape({
   linkedin: yup.string().url(),
 });
 
-export const LocationEditButton = () => {
+export const LocationEditCellItem = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -105,7 +105,7 @@ const ModalEdit = ({ open, onClose }: ComponenteProps) => {
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Edit Location</Divider>
       </DialogTitle>
-      <Formik // Error La propiedad "onSubmit" falta en el tipo "{ children: ({ dirty, isValid }: FormikProps<FormikValues>) => Element; initialValues: {}; validationSchema: ObjectSchema<{ name: string; description: string | undefined; ... 16 more ...; linkedin: string | undefined; }, AnyObject, { ...; }, "">; onubmit: () => void; }", pero es obligatoria en el tipo "FormikConfig<FormikValues>".ts(2741)
+      <Formik
         initialValues={{}}
         validationSchema={validationSchema}
         onSubmit={(values,formikHelpers) => {

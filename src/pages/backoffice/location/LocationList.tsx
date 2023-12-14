@@ -1,3 +1,4 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import {
   DataGrid,
@@ -6,19 +7,22 @@ import {
   GridRowParams,
 } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
+import { ApiResponse, apiGet } from "../../../services/apiService";
 import { LocationCreateButton } from "./LocationCreateButton";
+import { LocationEditCellItem } from "./LocationEditButton";
 import { LocationListFilter } from "./LocationListFilters";
-import { Location, UseLocationsQuery, useLocations } from "./locations.hooks";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { LocationEditButton } from "./LocationEditButton";
+import { Location, UseLocationsQuery } from "./locations.hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { setLocationList } from "../../../app/features/locations/locationSlice";
 
 export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState<UseLocationsQuery>({ name: "" });
-  const { data: locations, isLoading, error } = useLocations();
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [changeCounter,setChangeCounter] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 15,
@@ -29,7 +33,7 @@ export const LocationList = () => {
       field: "actions",
       type: "actions",
       getActions: (params: GridRowParams) => [
-        <LocationEditButton />,
+        <LocationEditCellItem />,
         <GridActionsCellItem
           icon={
             <DeleteIcon
@@ -48,9 +52,31 @@ export const LocationList = () => {
     },
   ];
 
-  if (error) {
-    enqueueSnackbar(error.message, { variant: "error" });
+  const incrementChangeCounter = () =>{
+    setChangeCounter(changeCounter +1)
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiGet<ApiResponse>('/location');
+        
+        if(response?.status === 'fail' && response?.message){
+          enqueueSnackbar(response.message, { variant: "error" });
+        }else if(response?.data){
+          setLocations(response.data)
+        }
+        
+      } catch (error: any) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [changeCounter]);
+
 
   const filteredLocations = useMemo(() => {
     return locations.filter((location) =>
@@ -61,7 +87,7 @@ export const LocationList = () => {
   return (
     <BackofficeLayout menuTitleSelected="List location">
       <Card>
-        <CardHeader title="Locations" action={<LocationCreateButton />} />
+        <CardHeader title="Locations" action={<LocationCreateButton incrementChangeCounter={incrementChangeCounter} />} />
         <CardContent sx={{ paddingTop: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>

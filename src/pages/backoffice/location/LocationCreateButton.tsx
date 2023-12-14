@@ -1,4 +1,6 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
   Button,
   Dialog,
@@ -9,16 +11,24 @@ import {
   Grid,
 } from "@mui/material";
 import { Form, Formik } from "formik";
+import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import * as yup from "yup";
+import { ApiResponse, apiPost } from "../../../services/apiService";
+import { Spinner } from "../../../shared/components/Spinner";
+import { Location } from "./locations.hooks";
 import AdditionalInformationForm from "./stepper/AdditionalInformationForm";
 import AddressForm from "./stepper/AddressForm";
 import BasicInformationForm from "./stepper/BasicInformationForm";
 import ContactForm from "./stepper/ContactForm";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { useDispatch } from "react-redux";
+import { addLocation } from "../../../app/features/locations/locationSlice";
 
-interface ComponenteProps {
+interface Props {
+  incrementChangeCounter(): void;
+}
+
+interface ComponenteProps extends Props {
   open: boolean;
 
   onClose(): void;
@@ -73,7 +83,7 @@ const validationSchema = yup.object().shape({
   linkedin: yup.string().url(),
 });
 
-export const LocationCreateButton = () => {
+export const LocationCreateButton = ({ incrementChangeCounter }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -85,22 +95,110 @@ export const LocationCreateButton = () => {
       >
         Create
       </Button>
-      {open && <ModalCreate open={open} onClose={() => setOpen(false)} />}
+      {open && (
+        <ModalCreate
+          open={open}
+          onClose={() => setOpen(false)}
+          incrementChangeCounter={incrementChangeCounter}
+        />
+      )}
     </>
   );
 };
 
-const ModalCreate = ({ open, onClose }: ComponenteProps) => {
-  return (
+const ModalCreate = ({
+  open,
+  onClose,
+  incrementChangeCounter,
+}: ComponenteProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispacth = useDispatch();
+
+  const createLocation = async (data: Location) => {
+    setIsLoading(true);
+
+    try {
+      const response = await apiPost<ApiResponse>("/location", data);
+
+      if (response?.status === "fail" && response?.message) {
+        enqueueSnackbar(response.message, { variant: "error" });
+      } else {
+        incrementChangeCounter();
+        dispacth(addLocation(response?.data));
+        enqueueSnackbar("Location created", { variant: "success" });
+        onClose();
+      }
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Create Location</Divider>
       </DialogTitle>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          name: "",
+          description: "",
+          image: "",
+          street: "",
+          city: "",
+          state: "",
+          postal_code: "",
+          country: "",
+          phone: "",
+          email: "",
+          website: "",
+          days_of_operation: [],
+          opening: "",
+          closing: "",
+          latitude: 0,
+          longitude: 0,
+          facebook: "",
+          twitter: "",
+          linkedin: "",
+        }}
         validationSchema={validationSchema}
         onSubmit={(values, formikHelpers) => {
-          // crearBienTipo(values)
+          createLocation({
+            name: values.name,
+            description: values.description,
+            image: values.image,
+            address: {
+              street: values.street,
+              city: values.city,
+              state: values.state,
+              postal_code: values.postal_code,
+              country: values.country,
+            },
+            contact: {
+              phone: values.phone,
+              email: values.email,
+            },
+            additional_info: {
+              website: values.website,
+              days_of_operation: ["Monday", "Wednesday", "Friday"],
+              business_hours: {
+                opening: values.opening,
+                closing: values.closing,
+              },
+              coordinates: {
+                latitude: values.latitude,
+                longitude: values.longitude,
+              },
+              social_media: {
+                facebook: values.facebook,
+                twitter: values.twitter,
+                linkedin: values.linkedin,
+              },
+            },
+          } as Location);
           formikHelpers.setSubmitting(false);
         }}
       >
@@ -123,16 +221,16 @@ const ModalCreate = ({ open, onClose }: ComponenteProps) => {
               </Grid>
             </DialogContent>
             <DialogActions>
-              <Button 
-              variant="outlined"
-              startIcon={<CancelIcon/>}
-              onClick={()=> onClose()}
+              <Button
+                variant="outlined"
+                startIcon={<CancelIcon />}
+                onClick={() => onClose()}
               >
                 Cancel
-                </Button>
+              </Button>
               <Button
                 type="submit"
-                startIcon={<CheckCircleIcon/>}
+                startIcon={<CheckCircleIcon />}
                 variant="contained"
                 disabled={!dirty || !isValid}
               >

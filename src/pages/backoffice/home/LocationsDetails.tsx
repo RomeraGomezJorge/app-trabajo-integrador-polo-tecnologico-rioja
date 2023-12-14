@@ -3,56 +3,84 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CircularProgress,
   Divider,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useEffect, useState } from "react";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
-import { useLocations } from "../location/locations.hooks";
+import { ApiResponse, apiGet } from "../../../services/apiService";
+import { Spinner } from "../../../shared/components/Spinner";
+import { Location } from "../location/locations.hooks";
 import { LocationTabContext } from "./Tab/LocationTabContext";
 
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { data: locations, isLoading, error } = useLocations();
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (error) {
-    enqueueSnackbar(error.message, { variant: "error" });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiGet<ApiResponse>("/location");
+
+        if (response?.status === "fail" && response?.message) {
+          enqueueSnackbar(response.message, { variant: "error" });
+        } else if (response?.data) {
+          setLocations(response.data);
+        }
+      } catch (error: any) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <BackofficeLayout menuTitleSelected="Dashboard">
       {isLoading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress size={50} />
-        </Box>
+        <Spinner/>
       ) : (
         <Card>
           <CardHeader title="Locations" />
           <CardContent>
-            {locations.map((location) => {
+            {locations.map((location:Location) => {
               return (
                 <Box sx={{ mb: 5 }}>
-                  <Divider textAlign="center"
-                           sx={{
-                             mb:3,
-                           "&::before, &::after": {
-                               borderColor: "blue",
-                             },
-                           }}
+                  <Divider
+                    textAlign="center"
+                    sx={{
+                      mb: 3,
+                      "&::before, &::after": {
+                        borderColor: "rgb(4, 54, 176)",
+                      },
+                    }}
                   >
                     <Typography component="h2" fontSize={25} fontWeight="bold">
-
-                      <span style={{ fontSize: 30, color: "blue", fontWeight:"normal", marginRight:10 }}>[</span>
+                      <span
+                        style={{
+                          fontSize: 30,
+                          color: "rgb(4, 54, 176)",
+                          fontWeight: "normal",
+                          marginRight: 10,
+                        }}
+                      >
+                        [
+                      </span>
                       {location.name}
-                      <span style={{ fontSize: 30, color: "blue",fontWeight:"normal",marginLeft:10 }}>]</span>
+                      <span
+                        style={{
+                          fontSize: 30,
+                          color: "rgb(4, 54, 176)",
+                          fontWeight: "normal",
+                          marginLeft: 10,
+                        }}
+                      >
+                        ]
+                      </span>
                     </Typography>
                   </Divider>
                   <LocationTabContext location={location} />
