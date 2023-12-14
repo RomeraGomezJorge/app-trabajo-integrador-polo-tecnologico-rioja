@@ -4,7 +4,7 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -12,7 +12,8 @@ import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { ApiResponse, apiGet } from "../../../services/apiService";
 import { Spinner } from "../../../shared/components/Spinner";
 import { Location } from "../location/locations.hooks";
-import { LocationTabContext } from "./Tab/LocationTabContext";
+import { LocationDetailTitle } from "./components/LocationDetailTitle";
+import { LocationTabContext } from "./components/LocationTabContext";
 
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -42,48 +43,19 @@ export const LocationsDetails = () => {
   return (
     <BackofficeLayout menuTitleSelected="Dashboard">
       {isLoading ? (
-        <Spinner/>
+        <Spinner />
       ) : (
         <Card>
           <CardHeader title="Locations" />
           <CardContent>
-            {locations.map((location:Location) => {
+            {locations.map((location: Location, index) => {
               return (
-                <Box sx={{ mb: 5 }}>
-                  <Divider
-                    textAlign="center"
-                    sx={{
-                      mb: 3,
-                      "&::before, &::after": {
-                        borderColor: "rgb(4, 54, 176)",
-                      },
-                    }}
-                  >
-                    <Typography component="h2" fontSize={25} fontWeight="bold">
-                      <span
-                        style={{
-                          fontSize: 30,
-                          color: "rgb(4, 54, 176)",
-                          fontWeight: "normal",
-                          marginRight: 10,
-                        }}
-                      >
-                        [
-                      </span>
-                      {location.name}
-                      <span
-                        style={{
-                          fontSize: 30,
-                          color: "rgb(4, 54, 176)",
-                          fontWeight: "normal",
-                          marginLeft: 10,
-                        }}
-                      >
-                        ]
-                      </span>
-                    </Typography>
-                  </Divider>
-                  <LocationTabContext location={location} />
+                <Box key={`box-${index}`} sx={{ mb: 5 }}>
+                  <LocationDetailTitle
+                    key={`title-${index}`}
+                    title={location.name}
+                  />
+                  <LocationTabContext key={`tab-${index}`} location={location} />
                 </Box>
               );
             })}

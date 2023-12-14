@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export const ContactUsCard = ({ title, icon, children }: Props) => {
+export const HomeCard = ({ title, icon, children }: Props) => {
   return (
     <Card
       sx={{

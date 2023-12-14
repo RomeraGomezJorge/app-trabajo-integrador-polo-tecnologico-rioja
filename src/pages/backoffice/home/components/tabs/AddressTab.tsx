@@ -1,10 +1,11 @@
 import PlaceIcon from "@mui/icons-material/Place";
 import { Grid, ListItem, ListItemText, Typography } from "@mui/material";
+import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { ContactUsCard } from "../ContacUsCard";
-import { Icon } from "leaflet";
-import { Address, Coordinates } from "../../location/locations.hooks";
+import { Address, Coordinates } from "../../../location/locations.hooks";
+import { HomeCard } from "../HomeCard";
+
 
 interface Props {
   name: string;
@@ -15,13 +16,13 @@ interface Props {
 export const AddressTab = ({ address, coordinates, name }: Props) => {
   const customIcon = new Icon({
     iconSize: [30, 30],
-    iconUrl: require("../../../../assets/img/marker-icon.png"),
+    iconUrl: require("../../../../../assets/img/marker-icon.png"),
   });
 
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3}>
-        <ContactUsCard
+        <HomeCard
           title="Local Office Address"
           icon={<PlaceIcon fontSize="small" />}
         >
@@ -42,7 +43,7 @@ export const AddressTab = ({ address, coordinates, name }: Props) => {
               <ListItemText primary="Postal code" secondary={address.postal_code} />
             </ListItem>
           </Typography>
-        </ContactUsCard>
+        </HomeCard>
       </Grid>
       <Grid item xs={9}>
         <MapContainer

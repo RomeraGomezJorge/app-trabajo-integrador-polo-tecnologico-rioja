@@ -3,7 +3,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { Button, List, ListItem, ListItemText } from "@mui/material";
-import { ContactUsCard } from "./ContacUsCard";
+import { HomeCard } from "./HomeCard";
 interface Props {
   facebook?: string;
   twitter?: string;
@@ -16,14 +16,14 @@ interface PropsComponent {
   label: string;
 }
 
-export const ContactUsSocialMediaCard = ({ facebook, twitter, linkedin }: Props) => {
+export const HomeSocialMediaCard = ({ facebook, twitter, linkedin }: Props) => {
 
   const show = Boolean(facebook || twitter || linkedin);
 
   return (
     <>
       {show && (
-        <ContactUsCard title="Social media" icon={<QuestionAnswerIcon />}>
+        <HomeCard title="Social media" icon={<QuestionAnswerIcon />}>
           <List>
             <SocialMediaButton
               url={facebook}
@@ -41,7 +41,7 @@ export const ContactUsSocialMediaCard = ({ facebook, twitter, linkedin }: Props)
               label="LinkedIn"
             />
           </List>
-        </ContactUsCard>
+        </HomeCard>
       )}
     </>
   );

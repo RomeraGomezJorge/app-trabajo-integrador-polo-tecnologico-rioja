@@ -1,20 +1,16 @@
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import {
-  Button,
   List,
   ListItem,
   ListItemText,
-  Typography,
+  Typography
 } from "@mui/material";
-import { ContactUsCard } from "../ContacUsCard";
-import { AdditionalInfo, Contact } from "../../location/locations.hooks";
-import { ContactUsSocialMediaCard } from "../ContactUsSocialMediaCard";
+
+import { HomeCard } from "../HomeCard";
+import { AdditionalInfo, Contact } from "../../../location/locations.hooks";
+import { HomeSocialMediaCard } from "../HomeSocialMediaCard";
 
 interface Props {
   contact: Contact;
@@ -26,7 +22,7 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
   return (
     <>
       {!!contact.phone && (
-        <ContactUsCard
+        <HomeCard
           title="Contact Us by Phone"
           icon={<LocalPhoneRoundedIcon fontSize="small" />}
         >
@@ -37,10 +33,10 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
             <br />
             Our team is here to assist you around the clock.
           </Typography>
-        </ContactUsCard>
+        </HomeCard>
       )}
       {!!contact.email && (
-        <ContactUsCard title="Have a Question?" icon={<MailRoundedIcon />}>
+        <HomeCard title="Have a Question?" icon={<MailRoundedIcon />}>
           <Typography sx={{ lineHeight: 2 }}>
             Drop us a message at
             <br />
@@ -49,9 +45,9 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
             and let us know your thoughts or inquiries. We're here to listen and
             respond promptly to assist you.
           </Typography>
-        </ContactUsCard>
+        </HomeCard>
       )}
-      <ContactUsCard title="Opening Hours" icon={<AccessAlarmsIcon />}>
+      <HomeCard title="Opening Hours" icon={<AccessAlarmsIcon />}>
         <List>
           {additional_info.days_of_operation.map((day) => (
             <ListItem key={day} style={{ padding: 1 }}>
@@ -60,10 +56,10 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
                 style={{ textAlign: "right" }}
               />
             </ListItem>
-          ))}
+          ))}º
         </List>
-      </ContactUsCard>
-      <ContactUsSocialMediaCard 
+      </HomeCard>
+      <HomeSocialMediaCard
         facebook={additional_info.social_media?.facebook}
         twitter={additional_info.social_media?.twitter}
         linkedin={additional_info.social_media?.linkedin}

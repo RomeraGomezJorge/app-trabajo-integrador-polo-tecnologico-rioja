@@ -1,9 +1,9 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
-import { BasicInforamtionTab } from "./BasicInforamtionTab";
-import { AddressTab } from "./AddressTab";
-import { ContactUsTab } from "./ContactUsTab";
+import { BasicInforamtionTab } from "./tabs/BasicInforamtionTab";
+import { AddressTab } from "./tabs/AddressTab";
+import { ContactUsTab } from "./tabs/ContactUsTab";
 import { Location } from "../../location/locations.hooks";
 
 interface Props {
