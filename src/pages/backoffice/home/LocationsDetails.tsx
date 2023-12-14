@@ -2,9 +2,7 @@ import {
   Box,
   Card,
   CardContent,
-  CardHeader,
-  Divider,
-  Typography,
+  CardHeader
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
