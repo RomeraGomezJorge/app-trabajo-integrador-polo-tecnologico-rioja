@@ -87,7 +87,7 @@ export async function apiPatch<T, D>(
   }
 }
 
-export async function apiDelete<T, D>(
+export async function apiDelete<T, D = unknown>(
   url: string,
   config?: AxiosRequestConfig<D>
 ) {

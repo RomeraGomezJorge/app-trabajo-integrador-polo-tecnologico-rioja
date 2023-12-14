@@ -1,19 +1,19 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import {
   DataGrid,
-  GridActionsCellItem,
   GridColDef,
-  GridRowParams,
+  GridRowParams
 } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useMemo, useState } from "react";
+
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { ApiResponse, apiGet } from "../../../services/apiService";
 import { LocationCreateButton } from "./LocationCreateButton";
 import { LocationEditCellItem } from "./LocationEditButton";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery } from "./locations.hooks";
+import { LocationDeleteCellItem } from "./LocationDeleteButton";
 
 export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,20 +32,7 @@ export const LocationList = () => {
       type: "actions",
       getActions: ({row}: GridRowParams) => [
         <LocationEditCellItem incrementChangeCounter={incrementChangeCounter} location={row} />,
-        <GridActionsCellItem
-          icon={
-            <DeleteIcon
-              sx={{
-                borderRadius: 8,
-                backgroundColor: "red",
-                color: "white",
-                fontSize:"1.5rem",
-                p: 0.5,
-              }}
-            />
-          }
-          label="Delete"
-        />,
+        <LocationDeleteCellItem incrementChangeCounter={incrementChangeCounter} id={row._id} />,
       ],
     },
   ];
