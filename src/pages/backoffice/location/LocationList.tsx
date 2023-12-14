@@ -14,8 +14,6 @@ import { LocationCreateButton } from "./LocationCreateButton";
 import { LocationEditCellItem } from "./LocationEditButton";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery } from "./locations.hooks";
-import { useDispatch, useSelector } from "react-redux";
-import { setLocationList } from "../../../app/features/locations/locationSlice";
 
 export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,8 +30,8 @@ export const LocationList = () => {
     {
       field: "actions",
       type: "actions",
-      getActions: (params: GridRowParams) => [
-        <LocationEditCellItem />,
+      getActions: ({row}: GridRowParams) => [
+        <LocationEditCellItem incrementChangeCounter={incrementChangeCounter} location={row} />,
         <GridActionsCellItem
           icon={
             <DeleteIcon

@@ -12,14 +12,24 @@ import {
 } from "@mui/material";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { Form, Formik } from "formik";
+import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
+import { ApiResponse, apiPatch } from "../../../services/apiService";
+import { Spinner } from "../../../shared/components/Spinner";
+import { Location } from "./locations.hooks";
 import AdditionalInformationForm from "./stepper/AdditionalInformationForm";
 import AddressForm from "./stepper/AddressForm";
 import BasicInformationForm from "./stepper/BasicInformationForm";
 import ContactForm from "./stepper/ContactForm";
 
-interface ComponenteProps {
+interface Props {
+  incrementChangeCounter(): void;
+  location: Location;
+}
+
+interface ComponenteProps extends Props {
   open: boolean;
 
   onClose(): void;
@@ -74,7 +84,7 @@ const validationSchema = yup.object().shape({
   linkedin: yup.string().url(),
 });
 
-export const LocationEditCellItem = () => {
+export const LocationEditCellItem = (props: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -94,23 +104,111 @@ export const LocationEditCellItem = () => {
         }
         label="Edit"
       />
-      {open && <ModalEdit open={open} onClose={() => setOpen(false)} />}
+      {open && (
+        <ModalEdit open={open} onClose={() => setOpen(false)} {...props} />
+      )}
     </>
   );
 };
 
-const ModalEdit = ({ open, onClose }: ComponenteProps) => {
-  return (
+const ModalEdit = ({
+  open,
+  onClose,
+  incrementChangeCounter,
+  location,
+}: ComponenteProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const updateLocation = async (id:string,data: Location) => {
+    setIsLoading(true);
+    console.log({id,data});
+    
+
+    try {
+      const response = await apiPatch<ApiResponse,Location>(
+        `/location/${id}`,
+        data
+      );
+
+      if (response?.status === "fail" && response?.message) {
+        enqueueSnackbar(response.message, { variant: "error" });
+      } else {
+        incrementChangeCounter();
+        enqueueSnackbar("Location updated", { variant: "success" });
+        onClose();
+      }
+    } catch (error: any) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Edit Location</Divider>
       </DialogTitle>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          name: location.name,
+          description: location.description,
+          image: location.image,
+          street: location.address.state,
+          city: location.address.city,
+          state: location.address.state,
+          postal_code: location.address.postal_code,
+          country: location.address.country,
+          phone: location.contact.phone,
+          email: location.contact.email,
+          website: location.additional_info.website,
+          days_of_operation: location.additional_info.days_of_operation,
+          opening: location.additional_info.business_hours.opening,
+          closing: location.additional_info.business_hours.closing,
+          latitude: location.additional_info.coordinates.latitude,
+          longitude: location.additional_info.coordinates.longitude,
+          facebook: location.additional_info.social_media.facebook,
+          twitter: location.additional_info.social_media.twitter,
+          linkedin: location.additional_info.social_media.linkedin,
+        }}
         validationSchema={validationSchema}
-        onSubmit={(values,formikHelpers) => {
-          // editar
-          formikHelpers.setSubmitting(false);  
+        onSubmit={(values, formikHelpers) => {
+          updateLocation(location._id,{
+            name: values.name,
+            description: values.description,
+            image: values.image,
+            address: {
+              street: values.street,
+              city: values.city,
+              state: values.state,
+              postal_code: values.postal_code,
+              country: values.country,
+            },
+            contact: {
+              phone: values.phone,
+              email: values.email,
+            },
+            additional_info: {
+              website: values.website,
+              days_of_operation: ["Monday", "Wednesday", "Friday"],
+              business_hours: {
+                opening: values.opening,
+                closing: values.closing,
+              },
+              coordinates: {
+                latitude: values.latitude,
+                longitude: values.longitude,
+              },
+              social_media: {
+                facebook: values.facebook,
+                twitter: values.twitter,
+                linkedin: values.linkedin,
+              },
+            },
+          } as Location);
+          formikHelpers.setSubmitting(false);
         }}
       >
         {({ dirty, isValid }) => (
