@@ -17,10 +17,10 @@ import * as yup from "yup";
 import { ApiResponse, apiPost } from "../../../services/apiService";
 import { Spinner } from "../../../shared/components/Spinner";
 import { Location } from "./locations.hooks";
-import AdditionalInformationForm from "./stepper/AdditionalInformationForm";
-import AddressForm from "./stepper/AddressForm";
-import BasicInformationForm from "./stepper/BasicInformationForm";
-import ContactForm from "./stepper/ContactForm";
+import AdditionalInformationForm from "./form/AdditionalInformationForm";
+import AddressForm from "./form/AddressForm";
+import BasicInformationForm from "./form/BasicInformationForm";
+import ContactForm from "./form/ContactForm";
 import { useDispatch } from "react-redux";
 import { addLocation } from "../../../app/features/locations/locationSlice";
 
