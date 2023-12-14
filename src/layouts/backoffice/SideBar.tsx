@@ -1,4 +1,4 @@
-import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import {EmotionJSX} from '@emotion/react/types/jsx-namespace';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeIcon from '@mui/icons-material/Home';
@@ -11,103 +11,100 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Typography from "@mui/material/Typography";
-import { styled, useTheme } from '@mui/material/styles';
-import { drawerWidth } from "./Layout";
+import Typography from '@mui/material/Typography';
+import {styled, useTheme} from '@mui/material/styles';
+import {drawerWidth} from './Layout';
 import MapIcon from '@mui/icons-material/Map';
 
 interface Props {
-    handleDrawerClose(): void
+  handleDrawerClose(): void
 
-    open: boolean
+  open: boolean
 
 }
 
 interface MenuItems {
-    title: string
-    icon: EmotionJSX.Element
-    url: string
+  title: string
+  icon: EmotionJSX.Element
+  url: string
 }
 
 const menuItems: MenuItems[] = [
-    {
-        title: 'Home',
-        icon: <HomeIcon/>,
-        url: '/backoffice/home',
-    },
-    {
-        title: 'Location',
-        icon: <MapIcon/>,
-        url: '/backoffice/location',
-    },
+  {
+    title: 'Home',
+    icon: <HomeIcon/>,
+    url: '/backoffice/home'
+  },
+  {
+    title: 'Location',
+    icon: <MapIcon/>,
+    url: '/backoffice/location'
+  }
 
 ]
 
 export const DrawerHeader = styled('div')(({theme}) => ({
-    display: 'flex',
-    alignItems: 'center',
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+  display: 'flex',
+  alignItems: 'center',
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end'
 }));
 
 export const SideBar = ({handleDrawerClose, open}: Props) => {
-    const theme = useTheme();
+  const theme = useTheme();
 
-    return (
-        <Drawer
-            sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
-                    width: drawerWidth,
-                    boxSizing: 'border-box',
-                    backgroundColor: '#2e3b4e',
-                    color: 'rgb(208, 211, 217)',
-                },
-                '& .MuiSvgIcon-root': {
-                    color: 'rgb(208, 211, 217)',
-                    fontSize: '19px',
-                },
-                '& .MuiListItemIcon-root': {
-                    minWidth: '30px',
-                },
-                '& .MuiListItem-root': {
-                    padding: '0 16px'
-                }, '& .MuiDivider-root': {
-                    backgroundColor: 'rgb(108, 119, 139)',
-                    width: '80%',
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                },
+  return (
+    <Drawer
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          backgroundColor: '#2e3b4e',
+          color: 'rgb(208, 211, 217)'
+        },
+        '& .MuiSvgIcon-root': {
+          color: 'rgb(208, 211, 217)',
+          fontSize: '19px'
+        },
+        '& .MuiListItemIcon-root': {
+          minWidth: '30px'
+        },
+        '& .MuiListItem-root': {
+          padding: '0 16px'
+        }, '& .MuiDivider-root': {
+          backgroundColor: 'rgb(108, 119, 139)',
+          width: '80%',
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }
 
-            }}
-            variant="persistent"
-            anchor="left"
-            open={open}
-        >
-            <DrawerHeader>
-                <Typography sx={{fontWeight: 'bold', fontSize: '18px', flexGrow: 1, textAlign: 'center'}}>
-                    Locations
-                </Typography>
-                <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                </IconButton>
-            </DrawerHeader>
-            <Divider/>
-            <List sx={{pt:0}}>
-                {
-                    menuItems.map((item, index) => (
-                        <>
-                            <ListItem key={item.title} disablePadding>
-                                <ListItemButton component="a" href={item.url}>
-                                    <ListItemIcon>{item.icon}</ListItemIcon>
-                                    <ListItemText primary={item.title}/>
-                                </ListItemButton>
-                            </ListItem>
-                            <Divider/>
-                        </>
-                    ))}
-            </List>
-        </Drawer>
-    );
+      }}
+      variant="persistent"
+      anchor="left"
+      open={open}
+    >
+      <DrawerHeader>
+        <Typography sx={{fontWeight: 'bold', fontSize: '18px', flexGrow: 1, textAlign: 'center'}}>
+          Locations
+        </Typography>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+        </IconButton>
+      </DrawerHeader>
+      <Divider/>
+      <List sx={{pt: 0}}>
+        {
+          menuItems.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton  component="a" href={item.url}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title}/>
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+    </Drawer>
+  );
 }

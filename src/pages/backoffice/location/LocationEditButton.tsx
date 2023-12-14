@@ -1,28 +1,19 @@
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-} from "@mui/material";
-import { GridActionsCellItem } from "@mui/x-data-grid";
-import { Form, Formik } from "formik";
-import { enqueueSnackbar } from "notistack";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import * as yup from "yup";
-import { ApiResponse, apiPatch } from "../../../services/apiService";
-import { Spinner } from "../../../shared/components/Spinner";
-import { Location } from "./locations.hooks";
-import AdditionalInformationForm from "./form/AdditionalInformationForm";
-import AddressForm from "./form/AddressForm";
-import BasicInformationForm from "./form/BasicInformationForm";
-import ContactForm from "./form/ContactForm";
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid} from '@mui/material';
+import {GridActionsCellItem} from '@mui/x-data-grid';
+import {Form, Formik} from 'formik';
+import {enqueueSnackbar} from 'notistack';
+import {useState} from 'react';
+import * as yup from 'yup';
+import {apiPatch, ApiResponse} from '../../../services/apiService';
+import {Spinner} from '../../../shared/components/Spinner';
+import {Location} from './locations.hooks';
+import AdditionalInformationForm from './form/AdditionalInformationForm';
+import AddressForm from './form/AddressForm';
+import BasicInformationForm from './form/BasicInformationForm';
+import ContactForm from './form/ContactForm';
 
 interface Props {
   incrementChangeCounter(): void;
@@ -42,7 +33,7 @@ const validationSchema = yup.object().shape({
   street: yup.string().required(),
   city: yup.string().required(),
   state: yup.string().required(),
-  postal_code: yup.string().required(),
+  postal_code: yup.number().required(),
   country: yup.string().required(),
   phone: yup.string(),
   email: yup.string().email(),
@@ -121,8 +112,6 @@ const ModalEdit = ({
 
   const updateLocation = async (id:string,data: Location) => {
     setIsLoading(true);
-    console.log({id,data});
-    
 
     try {
       const response = await apiPatch<ApiResponse,Location>(
@@ -169,9 +158,9 @@ const ModalEdit = ({
           closing: location.additional_info.business_hours.closing,
           latitude: location.additional_info.coordinates.latitude,
           longitude: location.additional_info.coordinates.longitude,
-          facebook: location.additional_info.social_media.facebook,
-          twitter: location.additional_info.social_media.twitter,
-          linkedin: location.additional_info.social_media.linkedin,
+          facebook: location.additional_info.social_media?.facebook ?? '',
+          twitter: location.additional_info.social_media?.twitter ?? '',
+          linkedin: location.additional_info.social_media?.linkedin ?? '',
         }}
         validationSchema={validationSchema}
         onSubmit={(values, formikHelpers) => {
@@ -183,7 +172,7 @@ const ModalEdit = ({
               street: values.street,
               city: values.city,
               state: values.state,
-              postal_code: values.postal_code,
+              postal_code: String(values.postal_code),
               country: values.country,
             },
             contact: {
@@ -192,7 +181,7 @@ const ModalEdit = ({
             },
             additional_info: {
               website: values.website,
-              days_of_operation: ["Monday", "Wednesday", "Friday"],
+              days_of_operation: values.days_of_operation,
               business_hours: {
                 opening: values.opening,
                 closing: values.closing,

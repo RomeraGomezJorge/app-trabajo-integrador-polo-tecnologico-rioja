@@ -41,7 +41,7 @@ const validationSchema = yup.object().shape({
   street: yup.string().required(),
   city: yup.string().required(),
   state: yup.string().required(),
-  postal_code: yup.string().required(),
+  postal_code: yup.number().required(),
   country: yup.string().required(),
   phone: yup.string(),
   email: yup.string().email(),
@@ -174,7 +174,7 @@ const ModalCreate = ({
               street: values.street,
               city: values.city,
               state: values.state,
-              postal_code: values.postal_code,
+              postal_code: String(values.postal_code) ,
               country: values.country,
             },
             contact: {
