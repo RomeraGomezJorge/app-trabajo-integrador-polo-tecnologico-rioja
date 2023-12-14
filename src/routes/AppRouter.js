@@ -5,8 +5,11 @@ import {SignUp} from "../pages/auth/SignUp";
 import {LocationList} from "../pages/backoffice/location/LocationList";
 import {LocationCreateButton} from "../pages/backoffice/location/LocationCreateButton";
 import {LocationsDetails} from "../pages/backoffice/home/LocationsDetails";
+import {useSelector} from "react-redux"
 
 export const AppRouter = () => {
+    const location = useSelector( state => state.locations)
+    console.log({location})
     return (
 
         <BrowserRouter>
