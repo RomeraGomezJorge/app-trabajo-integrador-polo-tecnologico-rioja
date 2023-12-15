@@ -54,4 +54,8 @@ Sigue estos pasos para configurar y ejecutar el servidor:
 El servidor estará en funcionamiento y escuchando en el puerto 3000 por defecto.   
 
 
+## Nota sobre la API
+
+El backend de esta aplicación se encuentra en un repositorio separado. Puedes encontrar la API en el siguiente enlace: [Repositorio de la API](https://github.com/RomeraGomezJorge/api-trabajo-integrador-polo-tecnologico-rioja).
+
 
