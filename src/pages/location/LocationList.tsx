@@ -4,12 +4,12 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
-import { ApiResponse, apiGet } from "../../../services/apiService";
-import { LocationCreateButton } from "./LocationCreateButton";
-import { LocationDeleteCellItem } from "./LocationDeleteButton";
-import { LocationEditCellItem } from "./LocationEditButton";
-import { LocationListFilter } from "./LocationListFilters";
+import { Layout as BackofficeLayout } from "../../layouts/Layout";
+import { ApiResponse, apiGet } from "../../services/apiService";
+import { LocationCreateButton } from "./components/LocationCreateButton";
+import { LocationDeleteCellItem } from "./components/LocationDeleteButton";
+import { LocationEditCellItem } from "./components/LocationEditButton";
+import { LocationListFilter } from "./components/LocationListFilters";
 import { Location, UseLocationsQuery } from "./locations.hooks";
 
 

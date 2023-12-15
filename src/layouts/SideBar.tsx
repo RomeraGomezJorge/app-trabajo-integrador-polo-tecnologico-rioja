@@ -2,7 +2,6 @@ import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeIcon from "@mui/icons-material/Home";
-import StoreIcon from "@mui/icons-material/Store";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -19,7 +18,6 @@ import { Link } from "react-router-dom";
 
 interface Props {
   handleDrawerClose(): void;
-
   open: boolean;
 }
 
@@ -33,12 +31,12 @@ const menuItems: MenuItems[] = [
   {
     title: "Home",
     icon: <HomeIcon />,
-    url: "/backoffice/home",
+    url: "/",
   },
   {
     title: "Location",
     icon: <MapIcon />,
-    url: "/backoffice/location",
+    url: "/location",
   },
 ];
 

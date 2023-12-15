@@ -15,7 +15,6 @@ import {Link} from "react-router-dom";
 
 interface Props {
     handleDrawerOpen(): void
-
     isSideBarOpen: boolean
     menuTitleSelected: string
 }
@@ -77,7 +76,7 @@ export const TopBar = ({isSideBarOpen, handleDrawerOpen, menuTitleSelected}: Pro
                 </IconButton>
                 <Box sx={{flexGrow: 1}}>
                     <Breadcrumbs separator="›" >
-                        <Link to="/backoffice/home" style={{textDecoration:'none'}}>
+                        <Link to="/" style={{textDecoration:'none'}}>
                             <Typography sx={{fontWeight: 'bold'}} color="white">
                                 Home
                             </Typography>

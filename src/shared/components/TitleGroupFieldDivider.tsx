@@ -6,7 +6,7 @@ export interface Props {
   secondary?: string;
 }
 
-export const TitleGroupField = ({ primary, secondary }: Props) => {
+export const TitleGroupFieldDivider = ({ primary, secondary }: Props) => {
   return (
     <>
       <Divider

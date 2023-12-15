@@ -1,11 +1,11 @@
 import Grid from "@mui/material/Grid";
 import { FormikTextField } from "../../../../shared/components/formikTextField";
-import { TitleGroupField } from "../../../../shared/components/TitleGroupField";
+import { TitleGroupFieldDivider } from "../../../../shared/components/TitleGroupFieldDivider";
 
 export default function BasicInformationForm() {
   return (
     <>
-      <TitleGroupField
+      <TitleGroupFieldDivider
         primary="Basic Information"
         secondary="Overview and visual representation"
       />

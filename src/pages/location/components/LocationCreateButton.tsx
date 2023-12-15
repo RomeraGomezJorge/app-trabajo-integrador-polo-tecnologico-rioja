@@ -1,23 +1,29 @@
-import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid} from '@mui/material';
-import {GridActionsCellItem} from '@mui/x-data-grid';
-import {Form, Formik} from 'formik';
-import {enqueueSnackbar} from 'notistack';
-import {useState} from 'react';
-import * as yup from 'yup';
-import {apiPatch, ApiResponse} from '../../../services/apiService';
-import {Spinner} from '../../../shared/components/Spinner';
-import {Location} from './locations.hooks';
-import AdditionalInformationForm from './form/AdditionalInformationForm';
-import AddressForm from './form/AddressForm';
-import BasicInformationForm from './form/BasicInformationForm';
-import ContactForm from './form/ContactForm';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+} from "@mui/material";
+import { Form, Formik } from "formik";
+import { enqueueSnackbar } from "notistack";
+import { useState } from "react";
+import * as yup from "yup";
+import { ApiResponse, apiPost } from "../../../services/apiService";
+import { Spinner } from "../../../shared/components/Spinner";
+import AdditionalInformationForm from "./form/AdditionalInformationForm";
+import AddressForm from "./form/AddressForm";
+import BasicInformationForm from "./form/BasicInformationForm";
+import ContactForm from "./form/ContactForm";
+import { Location } from "../locations.hooks";
 
 interface Props {
   incrementChangeCounter(): void;
-  location: Location;
 }
 
 interface ComponenteProps extends Props {
@@ -75,55 +81,46 @@ const validationSchema = yup.object().shape({
   linkedin: yup.string().url(),
 });
 
-export const LocationEditCellItem = (props: Props) => {
+export const LocationCreateButton = ({ incrementChangeCounter }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <GridActionsCellItem
-        icon={
-          <ModeEditIcon
-            sx={{
-              borderRadius: 8,
-              backgroundColor: "blue",
-              color: "white",
-              fontSize: "1.5rem",
-              p: 0.5,
-            }}
-            onClick={() => setOpen(true)}
-          />
-        }
-        label="Edit"
-      />
+      <Button
+        variant="contained"
+        startIcon={<AddCircleIcon />}
+        onClick={() => setOpen(true)}
+      >
+        Create
+      </Button>
       {open && (
-        <ModalEdit open={open} onClose={() => setOpen(false)} {...props} />
+        <ModalCreate
+          open={open}
+          onClose={() => setOpen(false)}
+          incrementChangeCounter={incrementChangeCounter}
+        />
       )}
     </>
   );
 };
 
-const ModalEdit = ({
+const ModalCreate = ({
   open,
   onClose,
   incrementChangeCounter,
-  location,
 }: ComponenteProps) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  const updateLocation = async (id:string,data: Location) => {
+    const createLocation = async (data: Location) => {
     setIsLoading(true);
 
     try {
-      const response = await apiPatch<ApiResponse,Location>(
-        `/location/${id}`,
-        data
-      );
+      const response = await apiPost<ApiResponse>("/location", data);
 
       if (response?.status === "fail" && response?.message) {
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
         incrementChangeCounter();
-        enqueueSnackbar("Location updated", { variant: "success" });
+        enqueueSnackbar("Location created", { variant: "success" });
         onClose();
       }
     } catch (error: any) {
@@ -138,33 +135,33 @@ const ModalEdit = ({
   ) : (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
-        <Divider textAlign="center">Edit Location</Divider>
+        <Divider textAlign="center">Create Location</Divider>
       </DialogTitle>
       <Formik
         initialValues={{
-          name: location.name,
-          description: location.description,
-          image: location.image,
-          street: location.address.state,
-          city: location.address.city,
-          state: location.address.state,
-          postal_code: location.address.postal_code,
-          country: location.address.country,
-          phone: location.contact.phone,
-          email: location.contact.email,
-          website: location.additional_info.website,
-          days_of_operation: location.additional_info.days_of_operation,
-          opening: location.additional_info.business_hours.opening,
-          closing: location.additional_info.business_hours.closing,
-          latitude: location.additional_info.coordinates.latitude,
-          longitude: location.additional_info.coordinates.longitude,
-          facebook: location.additional_info.social_media?.facebook ?? '',
-          twitter: location.additional_info.social_media?.twitter ?? '',
-          linkedin: location.additional_info.social_media?.linkedin ?? '',
+          name: "",
+          description: "",
+          image: "",
+          street: "",
+          city: "",
+          state: "",
+          postal_code: "",
+          country: "",
+          phone: "",
+          email: "",
+          website: "",
+          days_of_operation: [],
+          opening: "",
+          closing: "",
+          latitude: 0,
+          longitude: 0,
+          facebook: "",
+          twitter: "",
+          linkedin: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, formikHelpers) => {
-          updateLocation(location._id,{
+          createLocation({
             name: values.name,
             description: values.description,
             image: values.image,
@@ -172,7 +169,7 @@ const ModalEdit = ({
               street: values.street,
               city: values.city,
               state: values.state,
-              postal_code: String(values.postal_code),
+              postal_code: String(values.postal_code) ,
               country: values.country,
             },
             contact: {
@@ -181,7 +178,7 @@ const ModalEdit = ({
             },
             additional_info: {
               website: values.website,
-              days_of_operation: values.days_of_operation,
+              days_of_operation: ["Monday", "Wednesday", "Friday"],
               business_hours: {
                 opening: values.opening,
                 closing: values.closing,

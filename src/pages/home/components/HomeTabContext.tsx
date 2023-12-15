@@ -10,7 +10,7 @@ interface Props {
   location: Location;
 }
 
-export const LocationTabContext = ({ location }: Props) => {
+export const HomeTabContext = ({ location }: Props) => {
   const [value, setValue] = useState(`${location._id}-basic-information`);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -18,9 +18,9 @@ export const LocationTabContext = ({ location }: Props) => {
   };
 
   return (
-    <TabContext value={value}>
+    <TabContext value={value} >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <TabList onChange={handleChange} aria-label="lab API tabs example">
+        <TabList onChange={handleChange} centered >
           <Tab label="Basic Information" value={`${location._id}-basic-information`} />
           <Tab label="Address" value={`${location._id}-address`} />
           <Tab label="Contact Us" value={`${location._id}-contact-us`} />

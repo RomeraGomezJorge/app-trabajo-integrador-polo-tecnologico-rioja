@@ -1,10 +1,10 @@
-import PlaceIcon from "@mui/icons-material/Place";
-import { Grid, ListItem, ListItemText, Typography } from "@mui/material";
-import { Icon } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { Address, Coordinates } from "../../../location/locations.hooks";
-import { HomeCard } from "../HomeCard";
+import PlaceIcon from '@mui/icons-material/Place';
+import {Grid, ListItem, ListItemText, Typography} from '@mui/material';
+import {Icon} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Address, Coordinates} from '../../../location/locations.hooks';
+import {HomeCard} from '../HomeCard';
 
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 export const AddressTab = ({ address, coordinates, name }: Props) => {
   const customIcon = new Icon({
     iconSize: [30, 30],
-    iconUrl: require("../../../../../assets/img/marker-icon.png"),
+    iconUrl: require("../../../../assets/img/marker-icon.png"),
   });
 
   return (

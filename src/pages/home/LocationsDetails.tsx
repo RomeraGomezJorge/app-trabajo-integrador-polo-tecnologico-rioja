@@ -6,12 +6,12 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
-import { ApiResponse, apiGet } from "../../../services/apiService";
-import { Spinner } from "../../../shared/components/Spinner";
+import { Layout as BackofficeLayout } from "../../layouts/Layout";
+import { ApiResponse, apiGet } from "../../services/apiService";
+import { Spinner } from "../../shared/components/Spinner";
 import { Location } from "../location/locations.hooks";
-import { LocationDetailTitle } from "./components/LocationDetailTitle";
-import { LocationTabContext } from "./components/LocationTabContext";
+import { HomeNameLocationDivider } from "./components/HomeNameLocationDivider";
+import { HomeTabContext } from "./components/HomeTabContext";
 
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -49,11 +49,11 @@ export const LocationsDetails = () => {
             {locations.map((location: Location, index) => {
               return (
                 <Box key={`box-${index}`} sx={{ mb: 5 }}>
-                  <LocationDetailTitle
+                  <HomeNameLocationDivider
                     key={`title-${index}`}
                     title={location.name}
                   />
-                  <LocationTabContext key={`tab-${index}`} location={location} />
+                  <HomeTabContext key={`tab-${index}`} location={location} />
                 </Box>
               );
             })}
