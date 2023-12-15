@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
 import { ApiResponse, apiGet } from "../../services/apiService";
 import { Spinner } from "../../shared/components/Spinner";
-import { Location } from "../location/locations.hooks";
+import { Location } from "../location/locations.interface";
 import { HomeNameLocationDivider } from "./components/HomeNameLocationDivider";
 import { HomeTabContext } from "./components/HomeTabContext";
 

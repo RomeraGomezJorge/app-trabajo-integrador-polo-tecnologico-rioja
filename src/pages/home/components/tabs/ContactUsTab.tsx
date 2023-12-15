@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { HomeCard } from "../HomeCard";
-import { AdditionalInfo, Contact } from "../../../location/locations.hooks";
+import { AdditionalInfo, Contact } from "../../../location/locations.interface";
 import { HomeSocialMediaCard } from "../HomeSocialMediaCard";
 
 interface Props {

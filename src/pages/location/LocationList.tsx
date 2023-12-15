@@ -10,7 +10,7 @@ import { LocationCreateButton } from "./components/LocationCreateButton";
 import { LocationDeleteCellItem } from "./components/LocationDeleteButton";
 import { LocationEditCellItem } from "./components/LocationEditButton";
 import { LocationListFilter } from "./components/LocationListFilters";
-import { Location, UseLocationsQuery } from "./locations.hooks";
+import { Location, UseLocationsQuery } from "./locations.interface";
 
 
 export const LocationList = () => {

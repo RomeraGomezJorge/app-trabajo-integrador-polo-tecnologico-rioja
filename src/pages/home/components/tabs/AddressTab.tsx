@@ -3,7 +3,7 @@ import {Grid, ListItem, ListItemText, Typography} from '@mui/material';
 import {Icon} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
-import {Address, Coordinates} from '../../../location/locations.hooks';
+import {Address, Coordinates} from '../../../location/locations.interface';
 import {HomeCard} from '../HomeCard';
 
 

@@ -9,7 +9,7 @@ import {useState} from 'react';
 import * as yup from 'yup';
 import {apiPatch, ApiResponse} from '../../../services/apiService';
 import {Spinner} from '../../../shared/components/Spinner';
-import {Location} from '../locations.hooks';
+import {Location} from '../locations.interface';
 import AdditionalInformationForm from './form/AdditionalInformationForm';
 import AddressForm from './form/AddressForm';
 import BasicInformationForm from './form/BasicInformationForm';

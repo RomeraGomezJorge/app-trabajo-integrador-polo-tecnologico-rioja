@@ -1,4 +1,4 @@
-ºenum DaysOfOperation {
+enum DaysOfOperation {
   Monday = "Monday",
   Tuesday = "Tuesday",
   Wednesday = "Wednesday",

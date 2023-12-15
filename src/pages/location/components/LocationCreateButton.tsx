@@ -20,7 +20,7 @@ import AdditionalInformationForm from "./form/AdditionalInformationForm";
 import AddressForm from "./form/AddressForm";
 import BasicInformationForm from "./form/BasicInformationForm";
 import ContactForm from "./form/ContactForm";
-import { Location } from "../locations.hooks";
+import { Location } from "../locations.interface";
 
 interface Props {
   incrementChangeCounter(): void;

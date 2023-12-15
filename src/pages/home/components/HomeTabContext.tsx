@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BasicInforamtionTab } from "./tabs/BasicInforamtionTab";
 import { AddressTab } from "./tabs/AddressTab";
 import { ContactUsTab } from "./tabs/ContactUsTab";
-import { Location } from "../../location/locations.hooks";
+import { Location } from "../../location/locations.interface";
 
 interface Props {
   location: Location;
