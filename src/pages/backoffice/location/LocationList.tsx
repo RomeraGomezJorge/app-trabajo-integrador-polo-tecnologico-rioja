@@ -1,26 +1,29 @@
 import { Card, CardContent, CardHeader, Grid } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridRowParams
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useSelector } from "react-redux";
 import { Layout as BackofficeLayout } from "../../../layouts/backoffice/Layout";
 import { ApiResponse, apiGet } from "../../../services/apiService";
 import { LocationCreateButton } from "./LocationCreateButton";
+import { LocationDeleteCellItem } from "./LocationDeleteButton";
 import { LocationEditCellItem } from "./LocationEditButton";
 import { LocationListFilter } from "./LocationListFilters";
 import { Location, UseLocationsQuery } from "./locations.hooks";
-import { LocationDeleteCellItem } from "./LocationDeleteButton";
+
 
 export const LocationList = () => {
+
+  // Obtengo del estado global de redux los valores correspondientes a los filtros de busqueda para las ubicaciones.
+  // por defecto seria {name:""}
+  const search = useSelector((state:any) => state.locationSearch);
+
   const { enqueueSnackbar } = useSnackbar();
-  const [filter, setFilter] = useState<UseLocationsQuery>({ name: "" });
+  const [filter, setFilter] = useState<UseLocationsQuery>(search);
   const [locations, setLocations] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [changeCounter,setChangeCounter] = useState(0);
+  const [changeCounter, setChangeCounter] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 15,
@@ -30,28 +33,33 @@ export const LocationList = () => {
     {
       field: "actions",
       type: "actions",
-      getActions: ({row}: GridRowParams) => [
-        <LocationEditCellItem incrementChangeCounter={incrementChangeCounter} location={row} />,
-        <LocationDeleteCellItem incrementChangeCounter={incrementChangeCounter} id={row._id} />,
+      getActions: ({ row }: GridRowParams) => [
+        <LocationEditCellItem
+          incrementChangeCounter={incrementChangeCounter}
+          location={row}
+        />,
+        <LocationDeleteCellItem
+          incrementChangeCounter={incrementChangeCounter}
+          id={row._id}
+        />,
       ],
     },
   ];
 
-  const incrementChangeCounter = () =>{
-    setChangeCounter(changeCounter +1)
-  }
+  const incrementChangeCounter = () => {
+    setChangeCounter(changeCounter + 1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiGet<ApiResponse>('/location');
-        
-        if(response?.status === 'fail' && response?.message){
+        const response = await apiGet<ApiResponse>("/location",{params:filter});
+
+        if (response?.status === "fail" && response?.message) {
           enqueueSnackbar(response.message, { variant: "error" });
-        }else if(response?.data){
-          setLocations(response.data)
+        } else if (response?.data) {
+          setLocations(response.data);
         }
-        
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       } finally {
@@ -60,19 +68,21 @@ export const LocationList = () => {
     };
 
     fetchData();
-  }, [changeCounter]);
+  }, [changeCounter,filter]);
 
 
-  const filteredLocations = useMemo(() => {
-    return locations.filter((location) =>
-      location.name.toLowerCase().includes(filter.name?.toLowerCase())
-    );
-  }, [locations, filter]);
 
   return (
     <BackofficeLayout menuTitleSelected="List location">
       <Card>
-        <CardHeader title="Locations" action={<LocationCreateButton incrementChangeCounter={incrementChangeCounter} />} />
+        <CardHeader
+          title="Locations"
+          action={
+            <LocationCreateButton
+              incrementChangeCounter={incrementChangeCounter}
+            />
+          }
+        />
         <CardContent sx={{ paddingTop: 0 }}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
@@ -88,7 +98,7 @@ export const LocationList = () => {
                 onPaginationModelChange={setPaginationModel}
                 pageSizeOptions={[5, 15, 25, 50]}
                 density="compact"
-                rows={filteredLocations as unknown as Location[]}
+                rows={locations as unknown as Location[]}
                 getRowId={(row: Location) => row._id}
                 columns={columns}
                 loading={isLoading}

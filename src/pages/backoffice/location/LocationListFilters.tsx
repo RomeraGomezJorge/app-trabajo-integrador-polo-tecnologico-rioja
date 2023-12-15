@@ -5,6 +5,8 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { FormikTextField } from "../../../shared/components/formikTextField";
 import { UseLocationsQuery } from "./locations.hooks";
+import { useDispatch } from "react-redux";
+import { cleanSearch, setSearch } from "../../../app/features/locations/locationSlice";
 
 const validationSchema = yup.object().shape({
   filter: yup.string().nullable(),
@@ -16,6 +18,15 @@ export interface Props {
 }
 
 export const LocationListFilter = ({ filter, setFilter }: Props) => {
+  const dispatch = useDispatch()
+
+  const cleanFilter = () =>{
+    setFilter({ name: "" })
+
+    // Envio la accion para limpiar los filtros en el estado global de redux
+    dispatch(cleanSearch())
+  }
+
   return (
     <Grid item xs={12}>
       <Formik
@@ -26,6 +37,10 @@ export const LocationListFilter = ({ filter, setFilter }: Props) => {
           setFilter({
             name: values.name,
           });
+
+          // Cuando se envia el formulario, envio la accion que actualiza los filtros 
+          // al estado global de redux con los valores del formulario.
+          dispatch(setSearch(values))
           formikHelpers.setSubmitting(false);
         }}
       >
@@ -53,7 +68,7 @@ export const LocationListFilter = ({ filter, setFilter }: Props) => {
                   <Button
                     startIcon={<CancelIcon />}
                     variant="text"
-                    onClick={() => setFilter({ name: "" })}
+                    onClick={cleanFilter}
                   >
                     Clean filters
                   </Button>

@@ -1,21 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState:Location[] = [];
+// Defino la forma del state que será gestionado por el slice.
+export interface LocationSearchState {
+  name: string;
+}
+
+// Estado inicial es una cadena vacia indicando que no se aplican filtros
+const initialState: LocationSearchState = {
+  name: "",
+};
 
 
-export const slice = createSlice({
-    name: 'locations',
-    initialState,
-    reducers: {
-      setLocationList:(state,action) =>{
-        state.push(action.payload)
-      },
-      addLocation:(state,action) =>{
-        state.push(action.payload)
-      }
+export const locationSearchSlice = createSlice({
+  name: "locationSearch",
+  initialState,
+  reducers: {
+    // Actualizo el state con la información proporcionada en action.payload 
+    // estableciendo un filtro de busqueda
+    setSearch: (_, action: PayloadAction<LocationSearchState>) => {
+      return { ...action.payload }
+      
     },
-  })
-  
-  export const { addLocation,setLocationList } = slice.actions
-  const reducer = slice.reducer
-  export default reducer
+    //  Reseteo la propiedad name del state para mostrar todos los elementos.
+    cleanSearch: (state) => {
+      state.name = "";
+    },
+  },
+});
+
+export const { setSearch, cleanSearch } = locationSearchSlice.actions;
+
+// Es el reducer generado por createSlice que manejará las acciones(setSearch, cleanSearch) definidas en el slice.
+const locationSearchReducer = locationSearchSlice.reducer;
+export default locationSearchReducer;

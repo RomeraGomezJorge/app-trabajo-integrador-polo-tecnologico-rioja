@@ -16,13 +16,11 @@ import { useState } from "react";
 import * as yup from "yup";
 import { ApiResponse, apiPost } from "../../../services/apiService";
 import { Spinner } from "../../../shared/components/Spinner";
-import { Location } from "./locations.hooks";
 import AdditionalInformationForm from "./form/AdditionalInformationForm";
 import AddressForm from "./form/AddressForm";
 import BasicInformationForm from "./form/BasicInformationForm";
 import ContactForm from "./form/ContactForm";
-import { useDispatch } from "react-redux";
-import { addLocation } from "../../../app/features/locations/locationSlice";
+import { Location } from "./locations.hooks";
 
 interface Props {
   incrementChangeCounter(): void;
@@ -112,9 +110,7 @@ const ModalCreate = ({
   incrementChangeCounter,
 }: ComponenteProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const dispacth = useDispatch();
-
-  const createLocation = async (data: Location) => {
+    const createLocation = async (data: Location) => {
     setIsLoading(true);
 
     try {
@@ -124,7 +120,6 @@ const ModalCreate = ({
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
         incrementChangeCounter();
-        dispacth(addLocation(response?.data));
         enqueueSnackbar("Location created", { variant: "success" });
         onClose();
       }

@@ -1,56 +1,55 @@
-import {EmotionJSX} from '@emotion/react/types/jsx-namespace';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import HomeIcon from '@mui/icons-material/Home';
-import StoreIcon from '@mui/icons-material/Store';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import {styled, useTheme} from '@mui/material/styles';
-import {drawerWidth} from './Layout';
-import MapIcon from '@mui/icons-material/Map';
+import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import HomeIcon from "@mui/icons-material/Home";
+import StoreIcon from "@mui/icons-material/Store";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import { styled, useTheme } from "@mui/material/styles";
+import { drawerWidth } from "./Layout";
+import MapIcon from "@mui/icons-material/Map";
+import { Link } from "react-router-dom";
 
 interface Props {
-  handleDrawerClose(): void
+  handleDrawerClose(): void;
 
-  open: boolean
-
+  open: boolean;
 }
 
 interface MenuItems {
-  title: string
-  icon: EmotionJSX.Element
-  url: string
+  title: string;
+  icon: EmotionJSX.Element;
+  url: string;
 }
 
 const menuItems: MenuItems[] = [
   {
-    title: 'Home',
-    icon: <HomeIcon/>,
-    url: '/backoffice/home'
+    title: "Home",
+    icon: <HomeIcon />,
+    url: "/backoffice/home",
   },
   {
-    title: 'Location',
-    icon: <MapIcon/>,
-    url: '/backoffice/location'
-  }
+    title: "Location",
+    icon: <MapIcon />,
+    url: "/backoffice/location",
+  },
+];
 
-]
-
-export const DrawerHeader = styled('div')(({theme}) => ({
-  display: 'flex',
-  alignItems: 'center',
+export const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end'
+  justifyContent: "flex-end",
 }));
 
-export const SideBar = ({handleDrawerClose, open}: Props) => {
+export const SideBar = ({ handleDrawerClose, open }: Props) => {
   const theme = useTheme();
 
   return (
@@ -58,53 +57,68 @@ export const SideBar = ({handleDrawerClose, open}: Props) => {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
+        "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: 'border-box',
-          backgroundColor: '#2e3b4e',
-          color: 'rgb(208, 211, 217)'
+          boxSizing: "border-box",
+          backgroundColor: "#2e3b4e",
+          color: "rgb(208, 211, 217)",
         },
-        '& .MuiSvgIcon-root': {
-          color: 'rgb(208, 211, 217)',
-          fontSize: '19px'
+        "& .MuiSvgIcon-root": {
+          color: "rgb(208, 211, 217)",
+          fontSize: "19px",
         },
-        '& .MuiListItemIcon-root': {
-          minWidth: '30px'
+        "& .MuiListItemIcon-root": {
+          minWidth: "30px",
         },
-        '& .MuiListItem-root': {
-          padding: '0 16px'
-        }, '& .MuiDivider-root': {
-          backgroundColor: 'rgb(108, 119, 139)',
-          width: '80%',
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }
-
+        "& .MuiListItem-root": {
+          padding: "0 16px",
+        },
+        "& .MuiDivider-root": {
+          backgroundColor: "rgb(108, 119, 139)",
+          width: "80%",
+          marginLeft: "auto",
+          marginRight: "auto",
+        },
       }}
       variant="persistent"
       anchor="left"
       open={open}
     >
       <DrawerHeader>
-        <Typography sx={{fontWeight: 'bold', fontSize: '18px', flexGrow: 1, textAlign: 'center'}}>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: "18px",
+            flexGrow: 1,
+            textAlign: "center",
+          }}
+        >
           Locations
         </Typography>
         <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+          {theme.direction === "ltr" ? (
+            <ChevronLeftIcon />
+          ) : (
+            <ChevronRightIcon />
+          )}
         </IconButton>
       </DrawerHeader>
-      <Divider/>
-      <List sx={{pt: 0}}>
-        {
-          menuItems.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton  component="a" href={item.url}>
+      <Divider />
+      <List sx={{ pt: 0 }}>
+        {menuItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <Link
+              to={item.url}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title}/>
+                <ListItemText primary={item.title} />
               </ListItemButton>
-            </ListItem>
-          ))}
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </Drawer>
   );
-}
+};
