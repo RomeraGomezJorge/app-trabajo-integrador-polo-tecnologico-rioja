@@ -1,8 +1,4 @@
-import {useEffect, useState} from 'react';
-import { ApiError,ApiResponse, apiGet, apiPost } from '../../services/apiService';
-
-
-enum DaysOfOperation {
+ºenum DaysOfOperation {
   Monday = "Monday",
   Tuesday = "Tuesday",
   Wednesday = "Wednesday",

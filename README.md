@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+#  APP Proyecto Integrador - Puntos de interés universitarios
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p> 
 
-## Available Scripts
+ <img src="https://img.shields.io/badge/TypeScript-323330?style=for-the-badge&logo=typescript&logoColor=007ACC">
 
-In the project directory, you can run:
+ <img src="	https://img.shields.io/badge/React-323330?style=for-the-badge&logo=react&logoColor=61DAFB">
 
-### `npm start`
+ <img src="https://img.shields.io/badge/Redux-323330?style=for-the-badge&logo=redux&logoColor=7446c2">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ <img src="https://img.shields.io/badge/Material--UI-323330?style=for-the-badge&logo=material-ui&logoColor=0081CB">
+</p>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+Este repositorio alberga una aplicación web desarrollada en React, diseñada específicamente para gestionar puntos de interés dirigidos a estudiantes universitarios. La aplicación ofrece una interfaz que simplifica la recuperación, creación, actualización y eliminación de estos puntos, optimizando así la organización y el acceso a información relevante para la comunidad universitaria.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Requisitos Previos
+- [Node.js](https://nodejs.org/): v16.20.1 o superior
+- [npm](https://www.npmjs.com/): v8.19.4 o superior
+- [Git](https://git-scm.com/): Asegúrate de tener Git instalado en tu sistema.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Configuración
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Sigue estos pasos para configurar y ejecutar el servidor:
 
-### `npm run eject`
+1. Clona este repositorio en tu máquina local:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```bash
+    git clone https://github.com/RomeraGomezJorge/app-trabajo-integrador-polo-tecnologico-rioja.git
+   ```
+2. Navega al directorio del proyecto:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ```bash
+    cd api-trabajo-integrador-polo-tecnologico-rioja
+    ```
+3. Instala las dependencias del proyecto:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    ```bash
+    npm install
+    ```
+4. Configurar el Archivo de Entorno
+   ```bash   
+   cp .env.example .env
+   ```
+   ```bash
+   nano .env
+   ```
+5. Inicia el proyecto
+   ```bash
+   npm start
+   ```
+El servidor estará en funcionamiento y escuchando en el puerto 3000 por defecto.   
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
