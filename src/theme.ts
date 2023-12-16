@@ -26,15 +26,18 @@ export const theme = createTheme({
         size: "large",
       },
     },
-    MuiTextField: {
+    MuiInputBase: {
       styleOverrides: {
         root: {
           backgroundColor: "#f2f2f2",
         },
       },
+     },
+    MuiTextField: {
       defaultProps: {
-        size: 'small'
+        size: "small",
+        fullWidth: true
       },
-    },
+     },
   },
 });

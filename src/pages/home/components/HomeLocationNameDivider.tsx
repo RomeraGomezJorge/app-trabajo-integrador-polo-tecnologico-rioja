@@ -4,7 +4,7 @@ interface Props {
   title: string;
 }
 
-export const HomeNameLocationDivider = ({ title }: Props) => {
+export const HomeLocationNameDivider = ({ title }: Props) => {
   return (
     <Divider
       textAlign="center"

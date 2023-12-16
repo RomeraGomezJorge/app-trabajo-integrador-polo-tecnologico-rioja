@@ -9,13 +9,13 @@ import { useEffect, useState } from "react";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
 import { ApiResponse, apiGet } from "../../services/apiService";
 import { Spinner } from "../../shared/components/Spinner";
-import { Location } from "../location/locations.interface";
-import { HomeNameLocationDivider } from "./components/HomeNameLocationDivider";
+import { ILocation } from "../location/locations.interface";
+import { HomeLocationNameDivider } from "./components/HomeLocationNameDivider";
 import { HomeTabContext } from "./components/HomeTabContext";
 
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [locations, setLocations] = useState<ILocation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -46,10 +46,10 @@ export const LocationsDetails = () => {
         <Card>
           <CardHeader title="Locations" />
           <CardContent>
-            {locations.map((location: Location, index) => {
+            {locations.map((location: ILocation, index) => {
               return (
                 <Box key={`box-${index}`} sx={{ mb: 5 }}>
-                  <HomeNameLocationDivider
+                  <HomeLocationNameDivider
                     key={`title-${index}`}
                     title={location.name}
                   />

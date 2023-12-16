@@ -8,7 +8,7 @@ enum DaysOfOperation {
   Sunday = "Sunday",
 }
 
-export interface Address {
+export interface IAddress {
   street: string;
   city: string;
   state: string;
@@ -16,45 +16,45 @@ export interface Address {
   country: string;
 }
 
-export interface Contact {
+export interface IContact {
   phone?: string;
   email?: string;
 }
 
-interface BusinessHours {
+interface IBusinessHours {
   opening: string;
   closing: string;
 }
 
-export interface Coordinates {
+export interface ICoordinates {
   latitude: number;
   longitude: number;
 }
 
-export interface SocialMedia {
+export interface ISocialMedia {
   facebook?: string;
   twitter?: string;
   linkedin?: string;
 }
 
-export interface AdditionalInfo {
+export interface IAdditionalInfo {
   website?: string;
   days_of_operation: DaysOfOperation[];
-  business_hours: BusinessHours;
-  coordinates: Coordinates;
-  social_media: SocialMedia;
+  business_hours: IBusinessHours;
+  coordinates: ICoordinates;
+  social_media: ISocialMedia;
 }
 
-export interface Location {
+export interface ILocation {
   _id: string;
   name: string;
   description?: string;
   image: string;
-  address: Address;
-  contact: Contact;
-  additional_info: AdditionalInfo
+  address: IAddress;
+  contact: IContact;
+  additional_info: IAdditionalInfo
 }
 
-export interface UseLocationsQuery {
+export interface ILocationsFilters {
   name: string ;
 }

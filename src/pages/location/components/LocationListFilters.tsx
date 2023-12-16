@@ -4,7 +4,7 @@ import { Button, Grid } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { FormikTextField } from "../../../shared/components/formikTextField";
-import { UseLocationsQuery } from "../locations.interface";
+import { ILocationsFilters } from "../locations.interface";
 import { useDispatch } from "react-redux";
 import { cleanSearch, setSearch } from "../../../app/features/locations/locationSlice";
 
@@ -13,8 +13,8 @@ const validationSchema = yup.object().shape({
 });
 
 export interface Props {
-  filter: UseLocationsQuery;
-  setFilter(values: UseLocationsQuery): void;
+  filter: ILocationsFilters;
+  setFilter(values: ILocationsFilters): void;
 }
 
 export const LocationListFilter = ({ filter, setFilter }: Props) => {

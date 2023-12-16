@@ -21,7 +21,6 @@ interface Props {
 
 interface ComponenteProps extends Props {
   open: boolean;
-
   onClose(): void;
 }
 
@@ -46,13 +45,13 @@ export const LocationDeleteCellItem = (props: Props) => {
         label="Delete"
       />
       {open && (
-        <ModalDelete open={open} onClose={() => setOpen(false)} {...props} />
+        <LocationDeleteDialog open={open} onClose={() => setOpen(false)} {...props} />
       )}
     </>
   );
 };
 
-const ModalDelete = ({
+const LocationDeleteDialog = ({
   open,
   onClose,
   incrementChangeCounter,
@@ -68,6 +67,8 @@ const ModalDelete = ({
       if (response?.status === "fail" && response?.message) {
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
+        // Ejecuto incrementChangeCounter para indicar al componente LocationList que se han realizado cambios en las
+        // y que debe volver a cargar los datos actualizados.        
         incrementChangeCounter();
         enqueueSnackbar("Location deleted", { variant: "success" });
         onClose();

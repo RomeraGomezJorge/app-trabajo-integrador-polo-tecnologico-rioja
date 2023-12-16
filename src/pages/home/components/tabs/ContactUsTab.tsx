@@ -1,23 +1,26 @@
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography
-} from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 
 import { HomeCard } from "../HomeCard";
-import { AdditionalInfo, Contact } from "../../../location/locations.interface";
+import {
+  IAdditionalInfo,
+  IContact,
+} from "../../../location/locations.interface";
 import { HomeSocialMediaCard } from "../HomeSocialMediaCard";
 
 interface Props {
-  contact: Contact;
-  additional_info: AdditionalInfo;
+  contact: IContact;
+  additional_info: IAdditionalInfo;
 }
 
 export const ContactUsTab = ({ contact, additional_info }: Props) => {
+  const showSocialMediaCard = Boolean(
+    additional_info.social_media?.facebook ||
+      additional_info.social_media?.twitter ||
+      additional_info.social_media?.linkedin
+  );
 
   return (
     <>
@@ -56,14 +59,16 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
                 style={{ textAlign: "right" }}
               />
             </ListItem>
-          ))}º
+          ))}
         </List>
       </HomeCard>
-      <HomeSocialMediaCard
-        facebook={additional_info.social_media?.facebook}
-        twitter={additional_info.social_media?.twitter}
-        linkedin={additional_info.social_media?.linkedin}
-      />
+      {showSocialMediaCard && (
+        <HomeSocialMediaCard
+          facebook={additional_info.social_media?.facebook}
+          twitter={additional_info.social_media?.twitter}
+          linkedin={additional_info.social_media?.linkedin}
+        />
+      )}
     </>
   );
 };

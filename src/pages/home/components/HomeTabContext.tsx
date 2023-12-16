@@ -1,13 +1,13 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import { useState } from "react";
-import { BasicInforamtionTab } from "./tabs/BasicInforamtionTab";
+import { BasicInformationTab } from "./tabs/BasicInformationTab";
 import { AddressTab } from "./tabs/AddressTab";
 import { ContactUsTab } from "./tabs/ContactUsTab";
-import { Location } from "../../location/locations.interface";
+import { ILocation } from "../../location/locations.interface";
 
 interface Props {
-  location: Location;
+  location: ILocation;
 }
 
 export const HomeTabContext = ({ location }: Props) => {
@@ -27,7 +27,7 @@ export const HomeTabContext = ({ location }: Props) => {
         </TabList>
       </Box>
       <TabPanel value={`${location._id}-basic-information`}>
-        <BasicInforamtionTab 
+        <BasicInformationTab
             description={location.description}
             image={location.image}
         />

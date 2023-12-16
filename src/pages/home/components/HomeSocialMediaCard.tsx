@@ -8,7 +8,7 @@ interface Props {
   facebook?: string;
   twitter?: string;
   linkedin?: string;
-} 
+}
 
 interface PropsComponent {
   url?: string;
@@ -18,32 +18,26 @@ interface PropsComponent {
 
 export const HomeSocialMediaCard = ({ facebook, twitter, linkedin }: Props) => {
 
-  const show = Boolean(facebook || twitter || linkedin);
-
   return (
-    <>
-      {show && (
-        <HomeCard title="Social media" icon={<QuestionAnswerIcon />}>
-          <List>
-            <SocialMediaButton
-              url={facebook}
-              icon={<FacebookIcon />}
-              label="Facebook"
-            />
-            <SocialMediaButton
-              url={twitter}
-              icon={<TwitterIcon />}
-              label="Twitter"
-            />
-            <SocialMediaButton
-              url={linkedin}
-              icon={<LinkedInIcon />}
-              label="LinkedIn"
-            />
-          </List>
-        </HomeCard>
-      )}
-    </>
+    <HomeCard title="Social media" icon={<QuestionAnswerIcon />}>
+      <List>
+        <SocialMediaButton
+          url={facebook}
+          icon={<FacebookIcon />}
+          label="Facebook"
+        />
+        <SocialMediaButton
+          url={twitter}
+          icon={<TwitterIcon />}
+          label="Twitter"
+        />
+        <SocialMediaButton
+          url={linkedin}
+          icon={<LinkedInIcon />}
+          label="LinkedIn"
+        />
+      </List>
+    </HomeCard>
   );
 };
 

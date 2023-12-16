@@ -3,14 +3,13 @@ import {Grid, ListItem, ListItemText, Typography} from '@mui/material';
 import {Icon} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
-import {Address, Coordinates} from '../../../location/locations.interface';
+import {IAddress, ICoordinates} from '../../../location/locations.interface';
 import {HomeCard} from '../HomeCard';
-
 
 interface Props {
   name: string;
-  address: Address;
-  coordinates: Coordinates;
+  address: IAddress;
+  coordinates: ICoordinates;
 }
 
 export const AddressTab = ({ address, coordinates, name }: Props) => {

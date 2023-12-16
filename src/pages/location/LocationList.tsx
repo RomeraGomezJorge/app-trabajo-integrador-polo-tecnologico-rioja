@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, Grid } from "@mui/material";
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-
 import { useSelector } from "react-redux";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
 import { ApiResponse, apiGet } from "../../services/apiService";
@@ -10,7 +9,7 @@ import { LocationCreateButton } from "./components/LocationCreateButton";
 import { LocationDeleteCellItem } from "./components/LocationDeleteButton";
 import { LocationEditCellItem } from "./components/LocationEditButton";
 import { LocationListFilter } from "./components/LocationListFilters";
-import { Location, UseLocationsQuery } from "./locations.interface";
+import { ILocation, ILocationsFilters } from "./locations.interface";
 
 
 export const LocationList = () => {
@@ -20,15 +19,15 @@ export const LocationList = () => {
   const search = useSelector((state:any) => state.locationSearch);
 
   const { enqueueSnackbar } = useSnackbar();
-  const [filter, setFilter] = useState<UseLocationsQuery>(search);
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [filter, setFilter] = useState<ILocationsFilters>(search);
+  const [locations, setLocations] = useState<ILocation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [changeCounter, setChangeCounter] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 15,
   });
-  const columns: GridColDef<Location>[] = [
+  const columns: GridColDef<ILocation>[] = [
     { field: "name", headerName: "Name", flex: 4 },
     {
       field: "actions",
@@ -46,6 +45,9 @@ export const LocationList = () => {
     },
   ];
 
+  // incrementChangeCounter se utiliza para comunicar al componente LocationList 
+  // que se han realizado cambios en las locations (ya sea creacion, edicion o eliminacion) y que debe volver 
+  // a cargar los datos actualizados.
   const incrementChangeCounter = () => {
     setChangeCounter(changeCounter + 1);
   };
@@ -98,8 +100,8 @@ export const LocationList = () => {
                 onPaginationModelChange={setPaginationModel}
                 pageSizeOptions={[5, 15, 25, 50]}
                 density="compact"
-                rows={locations as unknown as Location[]}
-                getRowId={(row: Location) => row._id}
+                rows={locations as unknown as ILocation[]}
+                getRowId={(row: ILocation) => row._id}
                 columns={columns}
                 loading={isLoading}
               />
