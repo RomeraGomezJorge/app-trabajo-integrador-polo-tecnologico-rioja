@@ -51,7 +51,6 @@ export default function AdditionalInformationForm() {
             }
             onChange={handleChange}
             onBlur={handleBlur}
-            required
           />
         </Grid>
         <Grid item xs={12}>
@@ -197,7 +196,6 @@ export default function AdditionalInformationForm() {
                   }
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -216,7 +214,6 @@ export default function AdditionalInformationForm() {
                   }
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -235,7 +232,6 @@ export default function AdditionalInformationForm() {
                   }
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
                 />
               </Grid>
             </Grid>

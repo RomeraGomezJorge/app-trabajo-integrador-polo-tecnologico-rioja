@@ -22,19 +22,19 @@ const validationSchema = yup.object().shape({
   image: yup.string().url(),
   address: yup
     .object({
-      street: yup.string().required(),
-      city: yup.string().required(),
-      state: yup.string().required(),
-      postal_code: yup.string().required(),
-      country: yup.string().required(),
+      street: yup.string().required().label('street'),
+      city: yup.string().required().label('city'),
+      state: yup.string().required().label('state'),
+      postal_code: yup.string().required().label('postal code'),
+      country: yup.string().required().label('country'),
     })
     .required(),
   contact: yup.object({
-    phone: yup.string(),
-    email: yup.string().email(),
+    phone: yup.string().label('phone'),
+    email: yup.string().email().label('email'),
   }),
   additional_info: yup.object({
-    website: yup.string().url(),
+    website: yup.string().url().label('website'),
     days_of_operation: yup
       .array()
       .of(
@@ -50,7 +50,7 @@ const validationSchema = yup.object().shape({
             "Sunday",
           ])
       )
-      .required(),
+      .required().label('days of operation'),
     business_hours: yup
       .object({
         opening: yup
@@ -59,26 +59,30 @@ const validationSchema = yup.object().shape({
           .matches(
             /^([01]\d|2[0-3]):[0-5]\d$/,
             "Opening time should be in HH:MM format"
-          ),
+          )
+          .label('opening')
+          ,
         closing: yup
           .string()
           .required()
           .matches(
             /^([01]\d|2[0-3]):[0-5]\d$/,
             "Closing time should be in HH:MM format"
-          ),
+          )
+          .label('closing')
+          ,
       })
       .required(),
     coordinates: yup
       .object({
-        latitude: yup.number().required(),
-        longitude: yup.number().required(),
+        latitude: yup.number().required().label('latitude'),
+        longitude: yup.number().required().label('longitude'),
       })
       .required(),
     social_media: yup.object({
-      facebook: yup.string().url(),
-      twitter: yup.string().url(),
-      linkedin: yup.string().url(),
+      facebook: yup.string().url().label('facebook'),
+      twitter: yup.string().url().label('twitter'),
+      linkedin: yup.string().url().label('linkedin'),
     }),
   }),
 });
