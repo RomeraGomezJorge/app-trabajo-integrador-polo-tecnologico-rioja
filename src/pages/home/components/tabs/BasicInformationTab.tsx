@@ -8,14 +8,16 @@ interface Props {
 
 export const BasicInformationTab = ({ description, image }: Props) => {
   return (
-    <Box sx={{ p: 3, display: "flex", alignItems: "center" }}>
-      {!!image && (
-        <img
-          src={image}
-          alt=""
-          style={{ marginRight: "16px", maxWidth: "100px" }}
-        />
-      )}
+    <Box sx={{ p: 3, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+      <div style={{ marginBottom: "16px" }}>
+        {!!image && (
+          <img
+            src={image}
+            alt=""
+            style={{ maxWidth: "300px" }}
+          />
+        )}
+      </div>
 
       <div>
         <Typography>{description}</Typography>
