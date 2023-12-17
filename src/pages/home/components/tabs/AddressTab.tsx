@@ -19,7 +19,7 @@ export const AddressTab = ({ address, coordinates, name }: Props) => {
   });
 
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={2} alignItems="center"  justifyContent="center">
         <Grid item xs={3} container justifyContent="center" alignItems="center">
         <HomeCard
           title="Local Office Address"
