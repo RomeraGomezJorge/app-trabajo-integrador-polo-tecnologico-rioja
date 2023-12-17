@@ -6,6 +6,7 @@
     Typography,
   } from "@mui/material";
   import { ReactNode } from "react";
+  import {theme} from '../../../theme'
 
   interface Props {
     title: string;
@@ -28,7 +29,7 @@
       >
         <Avatar
           sx={{
-            backgroundColor: "#0543dc",
+            backgroundColor: theme.palette.primary.main,
             width: 45,
             height: 42,
             position: "absolute",

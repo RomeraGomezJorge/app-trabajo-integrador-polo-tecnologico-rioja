@@ -9,6 +9,7 @@ import {
   IContact,
 } from "../../../location/locations.interface";
 import { HomeSocialMediaCard } from "../HomeSocialMediaCard";
+import {theme} from '../../../../theme'
 
 interface Props {
   contact: IContact;
@@ -32,7 +33,7 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
           <Typography sx={{ lineHeight: 2 }}>
             Feel free to reach out to us at any time by calling
             <br />
-            <strong style={{ color: "#0543dc" }}>{contact.phone}</strong>
+            <strong style={{ color: theme.palette.primary.main }}>{contact.phone}</strong>
             <br />
             Our team is here to assist you around the clock.
           </Typography>
@@ -43,7 +44,7 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
           <Typography sx={{ lineHeight: 2 }}>
             Drop us a message at
             <br />
-            <strong style={{ color: "#0543dc" }}>{contact.email}</strong>
+            <strong style={{ color: theme.palette.primary.main }}>{contact.email}</strong>
             <br />
             and let us know your thoughts or inquiries. We're here to listen and
             respond promptly to assist you.

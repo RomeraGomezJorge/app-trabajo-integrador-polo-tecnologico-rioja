@@ -1,5 +1,6 @@
 import { Divider } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {theme} from '../../theme'
 
 export interface Props {
   primary: string;
@@ -19,7 +20,7 @@ export const TitleGroupFieldDivider = ({ primary, secondary }: Props) => {
             width:0
           },
           "&::after": {
-            borderColor: "#0543dc",
+            borderColor: theme.palette.primary.main,
             pl:0
           },
         }}
