@@ -39,7 +39,7 @@ export const HomeTabContext = ({ location }: Props) => {
           coordinates={location.additional_info.coordinates}
         />
       </TabPanel>
-      <TabPanel value={`${location._id}-contact-us`} sx={{ display: "flex", gap: 5 }}>
+      <TabPanel value={`${location._id}-contact-us`} >
         <ContactUsTab
             contact={location.contact}            
             additional_info={location.additional_info}

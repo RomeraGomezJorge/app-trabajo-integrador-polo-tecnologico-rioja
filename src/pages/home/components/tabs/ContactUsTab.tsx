@@ -1,7 +1,7 @@
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
 import MailRoundedIcon from "@mui/icons-material/MailRounded";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
 import { HomeCard } from "../HomeCard";
 import {
@@ -23,7 +23,7 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
   );
 
   return (
-    <>
+    <Box sx={{ display: "flex",gap:5,  justifyContent: "center",  }}>
       {!!contact.phone && (
         <HomeCard
           title="Contact Us by Phone"
@@ -69,6 +69,6 @@ export const ContactUsTab = ({ contact, additional_info }: Props) => {
           linkedin={additional_info.social_media?.linkedin}
         />
       )}
-    </>
+    </Box>
   );
 };
