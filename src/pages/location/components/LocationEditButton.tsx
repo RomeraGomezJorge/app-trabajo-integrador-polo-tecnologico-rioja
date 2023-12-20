@@ -7,7 +7,7 @@ import {
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import { ApiResponse, apiPatch } from "../../../services/apiService";
+import { ApiResponse, apiPatch, fetchStatus } from "../../../services/apiService";
 import { Spinner } from "../../../shared/components/Spinner";
 import { ILocation } from "../locations.interface";
 import { LocationForm } from "./LocationForm";
@@ -55,10 +55,10 @@ const LocationEditDialog = ({
   incrementChangeCounter,
   location,
 }: ComponenteProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(fetchStatus.IDLE);
 
   const updateLocation = async (data: ILocation, id: string) => {
-    setIsLoading(true);
+    setStatus(fetchStatus.LOADING);
 
     try {
       const response = await apiPatch<ApiResponse, ILocation>(
@@ -67,22 +67,24 @@ const LocationEditDialog = ({
       );
 
       if (response?.status === "fail" && response?.message) {
+        setStatus(fetchStatus.ERROR);
         enqueueSnackbar(response.message, { variant: "error" });
+
       } else {
         // Ejecuto incrementChangeCounter para indicar al componente LocationList que se han realizado cambios en las
         // y que debe volver a cargar los datos actualizados.        
         incrementChangeCounter();
+        setStatus(fetchStatus.SUCCESS);
         enqueueSnackbar("Location updated", { variant: "success" });
         onClose();
       }
     } catch (error: any) {
+      setStatus(fetchStatus.ERROR);
       enqueueSnackbar(error.message, { variant: "error" });
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  return isLoading ? (
+  return (status === fetchStatus.LOADING) ? (
     <Spinner />
   ) : (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>

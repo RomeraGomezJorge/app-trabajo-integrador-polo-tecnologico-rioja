@@ -7,7 +7,7 @@ import {
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
-import { ApiResponse, apiGet } from "../../services/apiService";
+import { ApiResponse, apiGet, fetchStatus } from "../../services/apiService";
 import { Spinner } from "../../shared/components/Spinner";
 import { ILocation } from "../location/locations.interface";
 import { HomeLocationNameDivider } from "./components/HomeLocationNameDivider";
@@ -16,22 +16,24 @@ import { HomeTabContext } from "./components/HomeTabContext";
 export const LocationsDetails = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [locations, setLocations] = useState<ILocation[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState(fetchStatus.IDLE);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setStatus(fetchStatus.LOADING);
         const response = await apiGet<ApiResponse>("/location");
 
         if (response?.status === "fail" && response?.message) {
+          setStatus(fetchStatus.ERROR);
           enqueueSnackbar(response.message, { variant: "error" });
         } else if (response?.data) {
+          setStatus(fetchStatus.SUCCESS);
           setLocations(response.data);
         }
       } catch (error: any) {
+        setStatus(fetchStatus.ERROR);
         enqueueSnackbar(error.message, { variant: "error" });
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -40,7 +42,7 @@ export const LocationsDetails = () => {
 
   return (
     <BackofficeLayout menuTitleSelected="Dashboard">
-      {isLoading ? (
+      {(status === fetchStatus.LOADING) ? (
         <Spinner />
       ) : (
         <Card>

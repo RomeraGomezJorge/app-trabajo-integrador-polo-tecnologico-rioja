@@ -11,7 +11,11 @@ import {
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import { ApiResponse, apiDelete } from "../../../services/apiService";
+import {
+  ApiResponse,
+  apiDelete,
+  fetchStatus,
+} from "../../../services/apiService";
 import { Spinner } from "../../../shared/components/Spinner";
 
 interface Props {
@@ -45,7 +49,11 @@ export const LocationDeleteCellItem = (props: Props) => {
         label="Delete"
       />
       {open && (
-        <LocationDeleteDialog open={open} onClose={() => setOpen(false)} {...props} />
+        <LocationDeleteDialog
+          open={open}
+          onClose={() => setOpen(false)}
+          {...props}
+        />
       )}
     </>
   );
@@ -57,38 +65,39 @@ const LocationDeleteDialog = ({
   incrementChangeCounter,
   id,
 }: ComponenteProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState(fetchStatus.IDLE);
 
   const deleteLocation = async (id: string) => {
-    setIsLoading(true);
+    setStatus(fetchStatus.LOADING);
     try {
       const response = await apiDelete<ApiResponse>(`/location/${id}`);
 
       if (response?.status === "fail" && response?.message) {
+        setStatus(fetchStatus.ERROR);
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
         // Ejecuto incrementChangeCounter para indicar al componente LocationList que se han realizado cambios en las
-        // y que debe volver a cargar los datos actualizados.        
+        // y que debe volver a cargar los datos actualizados.
         incrementChangeCounter();
+        setStatus(fetchStatus.SUCCESS);
         enqueueSnackbar("Location deleted", { variant: "success" });
         onClose();
       }
     } catch (error: any) {
+      setStatus(fetchStatus.ERROR);
       enqueueSnackbar(error.message, { variant: "error" });
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  return isLoading ? (
+  return status === fetchStatus.IDLE ? (
     <Spinner />
   ) : (
-    <Dialog open={open} maxWidth="sm" fullWidth onClose={onClose} >
+    <Dialog open={open} maxWidth="sm" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Confirm Location Deletion</Divider>
       </DialogTitle>
 
-      <DialogContent sx={{ paddingTop: 2, textAlign:"center" }}>
+      <DialogContent sx={{ paddingTop: 2, textAlign: "center" }}>
         Are you sure you want to permanently delete this location? This action
         cannot be undone.
       </DialogContent>

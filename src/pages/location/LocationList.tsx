@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
-import { ApiResponse, apiGet } from "../../services/apiService";
+import { ApiResponse, apiGet, fetchStatus } from "../../services/apiService";
 import { LocationCreateButton } from "./components/LocationCreateButton";
 import { LocationDeleteCellItem } from "./components/LocationDeleteButton";
 import { LocationEditCellItem } from "./components/LocationEditButton";
@@ -21,7 +21,7 @@ export const LocationList = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState<ILocationsFilters>(search);
   const [locations, setLocations] = useState<ILocation[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState(fetchStatus.IDLE);
   const [changeCounter, setChangeCounter] = useState(0);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
@@ -53,26 +53,30 @@ export const LocationList = () => {
   };
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
+  
+        setStatus(fetchStatus.LOADING)
         const response = await apiGet<ApiResponse>("/location",{params:filter});
-
+  
         if (response?.status === "fail" && response?.message) {
+          setStatus(fetchStatus.ERROR)
           enqueueSnackbar(response.message, { variant: "error" });
         } else if (response?.data) {
           setLocations(response.data);
+          setStatus(fetchStatus.SUCCESS)
         }
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
-      } finally {
-        setIsLoading(false);
+        setStatus(fetchStatus.ERROR)
       }
-    };
+    };      
 
     fetchData();
   }, [changeCounter,filter]);
 
-
+  const isLoading = (status === fetchStatus.LOADING);
 
   return (
     <BackofficeLayout menuTitleSelected="List location">

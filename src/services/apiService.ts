@@ -1,5 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-
+export const fetchStatus ={
+  IDLE:"idle",
+  LOADING:"loading",
+  SUCCESS:"success",
+  ERROR:"error",
+}
 export interface ApiError {
   code: number;
   message: string;
