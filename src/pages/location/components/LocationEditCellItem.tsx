@@ -1,14 +1,13 @@
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import {
-  Dialog,
-  DialogTitle,
-  Divider
-} from "@mui/material";
+import { Dialog, DialogTitle, Divider } from "@mui/material";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
-import { ApiResponse, apiPatch, fetchStatus } from "../../../services/apiService";
-import { Spinner } from "../../../shared/components/Spinner";
+import {
+  ApiResponse,
+  apiPatch,
+  fetchStatus,
+} from "../../../services/apiService";
 import { ILocation } from "../locations.interface";
 import { LocationForm } from "./LocationForm";
 
@@ -37,13 +36,17 @@ export const LocationEditCellItem = (props: Props) => {
               fontSize: "1.5rem",
               p: 0.5,
             }}
-            onClick={() => setOpen(true)}
           />
         }
+        onClick={() => setOpen(true)}
         label="Edit"
       />
       {open && (
-        <LocationEditDialog open={open} onClose={() => setOpen(false)} {...props} />
+        <LocationEditDialog
+          open={open}
+          onClose={() => setOpen(false)}
+          {...props}
+        />
       )}
     </>
   );
@@ -66,13 +69,12 @@ const LocationEditDialog = ({
         data
       );
 
-      if (response?.status === "fail" && response?.message) {
+      if (response?.status === "error" && response?.message) {
         setStatus(fetchStatus.ERROR);
         enqueueSnackbar(response.message, { variant: "error" });
-
       } else {
         // Ejecuto incrementChangeCounter para indicar al componente LocationList que se han realizado cambios en las
-        // y que debe volver a cargar los datos actualizados.        
+        // y que debe volver a cargar los datos actualizados.
         incrementChangeCounter();
         setStatus(fetchStatus.SUCCESS);
         enqueueSnackbar("Location updated", { variant: "success" });
@@ -84,9 +86,8 @@ const LocationEditDialog = ({
     }
   };
 
-  return (status === fetchStatus.LOADING) ? (
-    <Spinner />
-  ) : (
+  const isLoading = status === fetchStatus.LOADING;
+  return (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Edit Location</Divider>
@@ -95,6 +96,7 @@ const LocationEditDialog = ({
         location={location}
         update={updateLocation}
         onClose={onClose}
+        loading={isLoading} 
       />
     </Dialog>
   );

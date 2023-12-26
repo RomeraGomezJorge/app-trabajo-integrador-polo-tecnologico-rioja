@@ -7,7 +7,6 @@ import {
   apiPost,
   fetchStatus,
 } from "../../../services/apiService";
-import { Spinner } from "../../../shared/components/Spinner";
 import { ILocation } from "../locations.interface";
 import { LocationForm } from "./LocationForm";
 
@@ -55,7 +54,7 @@ const LocationCreateDialog = ({
     try {
       const response = await apiPost<ApiResponse>("/location", data);
 
-      if (response?.status === "fail" && response?.message) {
+      if (response?.status === "error" && response?.message) {
         setStatus(fetchStatus.ERROR);
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
@@ -72,14 +71,18 @@ const LocationCreateDialog = ({
     }
   };
 
-  return (status === fetchStatus.LOADING) ? (
-    <Spinner />
-  ) : (
+  const isLoading = status === fetchStatus.LOADING;
+
+  return (
     <Dialog open={open} maxWidth="lg" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Create Location</Divider>
       </DialogTitle>
-      <LocationForm create={createLocation} onClose={onClose} />
+      <LocationForm
+        create={createLocation}
+        onClose={onClose}
+        loading={isLoading}
+      />
     </Dialog>
   );
 };

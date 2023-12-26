@@ -6,17 +6,15 @@ import { useSelector } from "react-redux";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
 import { ApiResponse, apiGet, fetchStatus } from "../../services/apiService";
 import { LocationCreateButton } from "./components/LocationCreateButton";
-import { LocationDeleteCellItem } from "./components/LocationDeleteButton";
-import { LocationEditCellItem } from "./components/LocationEditButton";
+import { LocationDeleteCellItem } from "./components/LocationDeleteCellItem";
+import { LocationEditCellItem } from "./components/LocationEditCellItem";
 import { LocationListFilter } from "./components/LocationListFilters";
 import { ILocation, ILocationsFilters } from "./locations.interface";
 
-
 export const LocationList = () => {
-
   // Obtengo del estado global de redux los valores correspondientes a los filtros de busqueda para las ubicaciones.
   // por defecto seria {name:""}
-  const search = useSelector((state:any) => state.locationSearch);
+  const search = useSelector((state: any) => state.locationSearch);
 
   const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState<ILocationsFilters>(search);
@@ -45,38 +43,38 @@ export const LocationList = () => {
     },
   ];
 
-  // incrementChangeCounter se utiliza para comunicar al componente LocationList 
-  // que se han realizado cambios en las locations (ya sea creacion, edicion o eliminacion) y que debe volver 
+  // incrementChangeCounter se utiliza para comunicar al componente LocationList
+  // que se han realizado cambios en las locations (ya sea creacion, edicion o eliminacion) y que debe volver
   // a cargar los datos actualizados.
   const incrementChangeCounter = () => {
     setChangeCounter(changeCounter + 1);
   };
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-  
-        setStatus(fetchStatus.LOADING)
-        const response = await apiGet<ApiResponse>("/location",{params:filter});
-  
-        if (response?.status === "fail" && response?.message) {
-          setStatus(fetchStatus.ERROR)
+        setStatus(fetchStatus.LOADING);
+        const response = await apiGet<ApiResponse>("/location", {
+          params: filter,
+        });
+
+        if (response?.status === "error" && response?.message) {
+          setStatus(fetchStatus.ERROR);
           enqueueSnackbar(response.message, { variant: "error" });
         } else if (response?.data) {
           setLocations(response.data);
-          setStatus(fetchStatus.SUCCESS)
+          setStatus(fetchStatus.SUCCESS);
         }
       } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
-        setStatus(fetchStatus.ERROR)
+        setStatus(fetchStatus.ERROR);
       }
-    };      
+    };
 
     fetchData();
-  }, [changeCounter,filter]);
+  }, [changeCounter, filter]);
 
-  const isLoading = (status === fetchStatus.LOADING);
+  const isLoading = status === fetchStatus.LOADING;
 
   return (
     <BackofficeLayout menuTitleSelected="List location">

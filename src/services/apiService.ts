@@ -12,7 +12,7 @@ export interface ApiError {
 }
 
 export interface ApiResponse{
-  status: 'success'|'fail',
+  status: 'success'|'error',
   data?: [],
   message?: string
 }

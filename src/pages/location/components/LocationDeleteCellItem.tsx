@@ -2,6 +2,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -72,7 +73,7 @@ const LocationDeleteDialog = ({
     try {
       const response = await apiDelete<ApiResponse>(`/location/${id}`);
 
-      if (response?.status === "fail" && response?.message) {
+      if (response?.status === "error" && response?.message) {
         setStatus(fetchStatus.ERROR);
         enqueueSnackbar(response.message, { variant: "error" });
       } else {
@@ -89,9 +90,7 @@ const LocationDeleteDialog = ({
     }
   };
 
-  return status === fetchStatus.IDLE ? (
-    <Spinner />
-  ) : (
+  return (
     <Dialog open={open} maxWidth="sm" fullWidth onClose={onClose}>
       <DialogTitle variant="h5" fontWeight="bold" textAlign="center">
         <Divider textAlign="center">Confirm Location Deletion</Divider>
@@ -112,7 +111,13 @@ const LocationDeleteDialog = ({
         </Button>
         <Button
           type="submit"
-          startIcon={<DeleteIcon />}
+          startIcon={
+            status === fetchStatus.LOADING ? (
+              <CircularProgress sx={{ color: "white" }} size={20} />
+            ) : (
+              <DeleteIcon />
+            )
+          }
           variant="contained"
           color="error"
           onClick={() => deleteLocation(id)}

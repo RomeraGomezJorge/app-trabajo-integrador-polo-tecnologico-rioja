@@ -1,9 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader
-} from "@mui/material";
+import { Box, Card, CardContent, CardHeader } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Layout as BackofficeLayout } from "../../layouts/Layout";
@@ -24,7 +19,7 @@ export const LocationsDetails = () => {
         setStatus(fetchStatus.LOADING);
         const response = await apiGet<ApiResponse>("/location");
 
-        if (response?.status === "fail" && response?.message) {
+        if (response?.status === "error" && response?.message) {
           setStatus(fetchStatus.ERROR);
           enqueueSnackbar(response.message, { variant: "error" });
         } else if (response?.data) {
@@ -42,7 +37,7 @@ export const LocationsDetails = () => {
 
   return (
     <BackofficeLayout menuTitleSelected="Dashboard">
-      {(status === fetchStatus.LOADING) ? (
+      {status === fetchStatus.LOADING ? (
         <Spinner />
       ) : (
         <Card>

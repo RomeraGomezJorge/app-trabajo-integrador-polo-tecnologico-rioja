@@ -1,6 +1,12 @@
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Button, DialogActions, DialogContent, Grid } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  DialogActions,
+  DialogContent,
+  Grid,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import { ILocation } from "../locations.interface";
@@ -14,6 +20,7 @@ interface Props {
   create?(location: ILocation): void;
   update?(location: ILocation, id: string): void;
   onClose(): void;
+  loading: boolean;
 }
 
 const validationSchema = yup.object().shape({
@@ -22,19 +29,19 @@ const validationSchema = yup.object().shape({
   image: yup.string().url(),
   address: yup
     .object({
-      street: yup.string().required().label('street'),
-      city: yup.string().required().label('city'),
-      state: yup.string().required().label('state'),
-      postal_code: yup.string().required().label('postal code'),
-      country: yup.string().required().label('country'),
+      street: yup.string().required().label("street"),
+      city: yup.string().required().label("city"),
+      state: yup.string().required().label("state"),
+      postal_code: yup.string().required().label("postal code"),
+      country: yup.string().required().label("country"),
     })
     .required(),
   contact: yup.object({
-    phone: yup.string().label('phone'),
-    email: yup.string().email().label('email'),
+    phone: yup.string().label("phone"),
+    email: yup.string().email().label("email"),
   }),
   additional_info: yup.object({
-    website: yup.string().url().label('website'),
+    website: yup.string().url().label("website"),
     days_of_operation: yup
       .array()
       .of(
@@ -50,7 +57,8 @@ const validationSchema = yup.object().shape({
             "Sunday",
           ])
       )
-      .required().label('days of operation'),
+      .required()
+      .label("days of operation"),
     business_hours: yup
       .object({
         opening: yup
@@ -60,8 +68,7 @@ const validationSchema = yup.object().shape({
             /^([01]\d|2[0-3]):[0-5]\d$/,
             "Opening time should be in HH:MM format"
           )
-          .label('opening')
-          ,
+          .label("opening"),
         closing: yup
           .string()
           .required()
@@ -69,25 +76,30 @@ const validationSchema = yup.object().shape({
             /^([01]\d|2[0-3]):[0-5]\d$/,
             "Closing time should be in HH:MM format"
           )
-          .label('closing')
-          ,
+          .label("closing"),
       })
       .required(),
     coordinates: yup
       .object({
-        latitude: yup.number().required().label('latitude'),
-        longitude: yup.number().required().label('longitude'),
+        latitude: yup.number().required().label("latitude"),
+        longitude: yup.number().required().label("longitude"),
       })
       .required(),
     social_media: yup.object({
-      facebook: yup.string().url().label('facebook'),
-      twitter: yup.string().url().label('twitter'),
-      linkedin: yup.string().url().label('linkedin'),
+      facebook: yup.string().url().label("facebook"),
+      twitter: yup.string().url().label("twitter"),
+      linkedin: yup.string().url().label("linkedin"),
     }),
   }),
 });
 
-export const LocationForm = ({ location, create, update, onClose }: Props) => {
+export const LocationForm = ({
+  location,
+  create,
+  update,
+  onClose,
+  loading,
+}: Props) => {
   const initialValues = {
     name: location?.name ?? "",
     description: location?.description ?? "",
@@ -168,7 +180,13 @@ export const LocationForm = ({ location, create, update, onClose }: Props) => {
             </Button>
             <Button
               type="submit"
-              startIcon={<CheckCircleIcon />}
+              startIcon={
+                loading ? (
+                  <CircularProgress sx={{ color: "white" }} size={20} />
+                ) : (
+                  <CheckCircleIcon />
+                )
+              }
               variant="contained"
               disabled={!dirty || !isValid}
             >
