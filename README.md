@@ -4,7 +4,7 @@
 
  <img src="https://img.shields.io/badge/TypeScript-323330?style=for-the-badge&logo=typescript&logoColor=007ACC">
 
- <img src="	https://img.shields.io/badge/React-323330?style=for-the-badge&logo=react&logoColor=61DAFB">
+ <img src="https://img.shields.io/badge/React-323330?style=for-the-badge&logo=react&logoColor=61DAFB">
 
  <img src="https://img.shields.io/badge/Redux-323330?style=for-the-badge&logo=redux&logoColor=7446c2">
 
@@ -32,14 +32,14 @@ Sigue estos pasos para configurar y ejecutar el servidor:
    ```
 2. Navega al directorio del proyecto:
 
-    ```bash
+   ```bash
     cd api-trabajo-integrador-polo-tecnologico-rioja
-    ```
+   ```
 3. Instala las dependencias del proyecto:
 
     ```bash
     npm install
-    ```
+   ```
 4. Configurar el Archivo de Entorno
    ```bash   
    cp .env.example .env
